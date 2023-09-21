@@ -1,0 +1,41 @@
+*{
+    background-color: white;
+}
+
+.brand{
+    width:100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 20px; 
+}
+
+.gb_id{
+    display: inline-block;
+    color: #5f6368;
+    opacity: 1;
+    font-family: "Product Sans",Arial,sans-serif;
+    font-size: 22px;
+    line-height: 24px;
+    padding-left: 8px;
+    position: relative;
+    top: -1.5px;
+    vertical-align: middle;
+}
+
+.profile{
+    display:flex;
+    justify-content:  flex-end;
+    margin-right: 20px;
+    width: 100%;
+    align-items: center;
+}
+
+.profile .circle{
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    padding: 3px;
+    border-radius:50%;
+    background-color: rgb(219, 219, 219);
+}

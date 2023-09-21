@@ -1,0 +1,11 @@
+.new-and-template{
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-color: #f1f3f4;
+}
+
+.card{
+    border:1px solid lightgray;
+    border-radius: 2px;
+
+}

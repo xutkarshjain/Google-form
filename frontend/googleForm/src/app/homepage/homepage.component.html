@@ -1,0 +1,81 @@
+<mat-toolbar style="background-color: white; color: #7248b9;">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"> -->
+    <mat-icon style="font-size: xxx-large; width: auto; height: auto;">description</mat-icon>
+    <!-- </button> -->
+    <span>Forms</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+        <mat-icon>apps</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon>share</mat-icon>
+    </button>
+</mat-toolbar>
+
+<div class="form-suggetion-panel">
+    <div class="suggetion-body">
+        <h4 *ngIf="breakpoint>1" style="margin-left:20px">Start a new form</h4>
+        <mat-grid-list [cols]="breakpoint" rowHeight="150px" gutterSize="10px" (window:resize)="onResize($event)">
+            <div *ngFor="let item of items; let i = index">
+                <mat-grid-tile *ngIf="i < breakpoint">
+                    <div class="grid-item">
+                        <img [src]="item.image" alt="Image" class="grid-image" />
+                        <div class="grid-label">{{ item.label }}</div>
+                    </div>
+                </mat-grid-tile>
+            </div>
+        </mat-grid-list>
+    </div>
+</div>
+
+<div class="recent-form-panel" [ngClass]="{ fullWidth : breakpoint <4}">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="formName">
+            <th mat-header-cell *matHeaderCellDef> Earlier </th>
+            <td mat-cell *matCellDef="let element">
+                <span style="display: flex;justify-items: center;align-items: center;">
+                    <mat-icon style="margin-right:5px" color="primary">description</mat-icon>
+                    {{element.formName}}
+                </span>
+            </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="ownedBy">
+            <th mat-header-cell *matHeaderCellDef> Owned By</th>
+            <td mat-cell *matCellDef="let element"> {{element.ownedBy}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="lastModified">
+            <th mat-header-cell *matHeaderCellDef> Last modified </th>
+            <td mat-cell *matCellDef="let element"> {{element.lastModified | date}} </td>
+        </ng-container>
+
+        <!-- action Column -->
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+                    <mat-icon style="margin-right:5px" color="primary">more_vert</mat-icon>
+                </button>
+                
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            (click)="openRow(row)"
+        ></tr>
+    </table>
+
+
+</div>

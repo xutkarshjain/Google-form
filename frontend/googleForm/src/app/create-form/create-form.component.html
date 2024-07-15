@@ -1,4 +1,40 @@
-<div>
+<div style="background: #f0ebf8; height: 100%">
   <app-action-header> </app-action-header>
-  <div class="body"></div>
+  <div class="body">
+    <div class="form-body">
+      <div
+        class="section"
+        *ngFor="let section of sections"
+        (click)="updateSelected(section.sectionId)"
+      >
+        <div
+          class="header selectable"
+          [ngClass]="{ selected: section.sectionId == selectedId }"
+        >
+          <div class="section-name">
+            <div class="new-text-like-input section-title">
+              <mat-form-field class="example-full-width">
+                <input
+                  placeholder="Form title"
+                  matInput
+                  [value]="section.sectionName"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="section-description">
+            <div class="new-text-like-input">
+              <mat-form-field class="example-full-width">
+                <input
+                  placeholder="Form description"
+                  matInput
+                  [value]="section.sectionDescription"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

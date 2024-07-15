@@ -1,7 +1,12 @@
+:host {
+  --dark-color: #673ab7;
+  --light-color: #f0ebf8;
+}
+
 .body {
-  padding-top: 115px;
-  height: calc(100% - 115px);
-  background: #f0ebf8;
+  padding-top: 113px;
+  height: calc(100% - 113px);
+  background: var(--light-color);
 }
 
 app-action-header {
@@ -10,4 +15,33 @@ app-action-header {
   left: 0;
   z-index: 2;
   width: 100%;
+}
+
+.form-body {
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
+.form-body .section {
+  margin-bottom: 30px;
+  padding: 10px;
+}
+
+.section .header {
+  border-top: 10px solid var(--dark-color);
+}
+
+.selectable {
+  width: 100%;
+  border: 1px solid rgb(218, 220, 224);
+  border-radius: 8px;
+  background: white;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.selectable.selected {
+  border-left: 6px solid #4285f4 !important;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12);
 }

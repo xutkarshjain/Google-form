@@ -19,6 +19,8 @@ div {
 .text-like-input .mdc-text-field--filled:not(.mdc-text-field--disabled),
 .text-like-input .mat-mdc-form-field-focus-overlay {
   background: white !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 .text-like-input
@@ -27,7 +29,8 @@ div {
   border-bottom-color: white;
 }
 
-.text-like-input .mat-mdc-form-field-subscript-wrapper {
+.text-like-input .mat-mdc-form-field-subscript-wrapper,
+.new-text-like-input .mat-mdc-form-field-subscript-wrapper {
   display: none;
 }
 
@@ -37,4 +40,108 @@ div {
   ):hover
   .mdc-line-ripple::before {
   width: 0 !important;
+}
+
+.text-like-input .mat-mdc-form-field-infix {
+  min-height: 0;
+  padding: 0 !important;
+}
+
+/*for new input*/
+.new-text-like-input .mdc-text-field--filled,
+.text-like-input .mat-mdc-form-field-focus-overlay {
+  padding: 0;
+}
+
+.new-text-like-input .mat-mdc-form-field {
+  width: 100%;
+}
+
+.new-text-like-input .mdc-text-field--filled,
+.new-text-like-input .mat-mdc-form-field-focus-overlay {
+  background: white !important;
+}
+
+/*use for titles only*/
+.selected
+  .new-text-like-input.section-title
+  .mat-mdc-form-field
+  .mat-mdc-floating-label.mdc-floating-label,
+.selected
+  .new-text-like-input.section-title
+  .mdc-text-field--no-label
+  .mat-mdc-form-field-input-control.mdc-text-field__input,
+.mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
+  font-size: 24pt;
+  color: rgb(32, 33, 36);
+}
+
+.section:first-child
+  .new-text-like-input.section-title
+  .mat-mdc-form-field
+  .mat-mdc-floating-label.mdc-floating-label,
+.section:first-child
+  .new-text-like-input:first-child.section-title
+  .mdc-text-field--no-label
+  .mat-mdc-form-field-input-control.mdc-text-field__input,
+.mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
+  font-size: 24pt;
+  color: rgb(32, 33, 36);
+}
+
+.new-text-like-input.section-title
+  .mat-mdc-form-field
+  .mat-mdc-floating-label.mdc-floating-label,
+.new-text-like-input {
+  color: rgb(32, 33, 36);
+  font-size: 11pt;
+}
+
+.selected
+  .new-text-like-input
+  .mdc-text-field--filled:not(.mdc-text-field--disabled)
+  .mdc-line-ripple::before {
+  border-bottom-color: #e0e0e0;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled):not(
+    .mdc-text-field--focused
+  ):hover
+  .mdc-line-ripple::before {
+  border-bottom-color: #e0e0e0 !important;
+}
+
+.selected .new-text-like-input:not(.section-title) .mat-mdc-form-field-infix {
+  padding: 0 !important;
+  margin-top: 4px !important;
+  min-height: 21px !important;
+}
+
+.new-text-like-input:not(.section-title) .mat-mdc-form-field-infix {
+  padding-bottom: 0 !important;
+  min-height: 0;
+}
+
+/* for non selected selectable*/
+.selectable:not(.selected)
+  .new-text-like-input
+  .mdc-text-field--filled:not(.mdc-text-field--disabled)
+  .mdc-line-ripple::before {
+  border-bottom-color: white;
+}
+
+.selectable:not(.selected)
+  .new-text-like-input
+  .mdc-text-field--filled:not(.mdc-text-field--disabled):not(
+    .mdc-text-field--focused
+  ):hover
+  .mdc-line-ripple::before {
+  width: 0;
+}
+
+.selectable:not(.selected)
+  .new-text-like-input.section-title
+  .mat-mdc-form-field-infix {
+  min-height: 0;
+  padding: 0;
 }

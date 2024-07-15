@@ -1,0 +1,49 @@
+.header {
+    background: white;
+    width: 100%;
+    border-bottom: 1px solid rgb(218, 220, 224);
+  }
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .gray-text {
+    color: gray;
+    background-color: white;
+    font-weight: 200;
+  }
+  
+  mat-toolbar {
+    background-color: white;
+    color: #7248b9;
+  }
+  
+  mat-toolbar > * {
+    margin-right: 5px;
+  }
+  
+  .tabs-group {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+
+  mat-form-field input{
+      text-overflow: ellipsis;
+      overflow-x: hidden;
+      white-space: nowrap;
+      font-size:18px;
+      opacity: 1;
+      color: rgb(32,33,36);
+  }
+  
+  mat-form-field{
+      width: 150px
+  
+  }

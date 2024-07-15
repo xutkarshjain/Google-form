@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
-
 export interface PeriodicElement {
   formName: string;
   lastModified: string;
@@ -9,17 +7,61 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { formName: 'Untitled name-1', lastModified: '2023-06-15T12:00:00Z', ownedBy: 'me' },
-  { formName: 'Untitled name-2', lastModified: '2023-07-01T09:30:00Z', ownedBy: 'me' },
-  { formName: 'Untitled name-3', lastModified: '2023-08-20T15:45:00Z', ownedBy: 'me' },
-  { formName: 'Untitled name-4', lastModified: '2023-09-05T08:00:00Z', ownedBy: 'me' },
-  { formName: 'Untitled name-5', lastModified: '2023-10-10T16:30:00Z', ownedBy: 'me' },
-  { formName: 'Untitled name-6', lastModified: '2023-08-20T15:45:00Z', ownedBy: 'me' },
-  { formName: 'Untitled name-7', lastModified: '2023-09-05T08:00:00Z', ownedBy: 'me' },
-  { formName: 'Untitled name-8', lastModified: '2023-10-10T16:30:00Z', ownedBy: 'me' },  
-  { formName: 'Untitled name-9', lastModified: '2023-08-20T15:45:00Z', ownedBy: 'me' },
-  { formName: 'Untitled name-10', lastModified: '2023-09-05T08:00:00Z', ownedBy: 'me' },
-  { formName: 'Untitled name-11', lastModified: '2023-10-10T16:30:00Z', ownedBy: 'me' },
+  {
+    formName: 'Untitled name-1',
+    lastModified: '2023-06-15T12:00:00Z',
+    ownedBy: 'me',
+  },
+  {
+    formName: 'Untitled name-2',
+    lastModified: '2023-07-01T09:30:00Z',
+    ownedBy: 'me',
+  },
+  {
+    formName: 'Untitled name-3',
+    lastModified: '2023-08-20T15:45:00Z',
+    ownedBy: 'me',
+  },
+  {
+    formName: 'Untitled name-4',
+    lastModified: '2023-09-05T08:00:00Z',
+    ownedBy: 'me',
+  },
+  {
+    formName: 'Untitled name-5',
+    lastModified: '2023-10-10T16:30:00Z',
+    ownedBy: 'me',
+  },
+  {
+    formName: 'Untitled name-6',
+    lastModified: '2023-08-20T15:45:00Z',
+    ownedBy: 'me',
+  },
+  {
+    formName: 'Untitled name-7',
+    lastModified: '2023-09-05T08:00:00Z',
+    ownedBy: 'me',
+  },
+  {
+    formName: 'Untitled name-8',
+    lastModified: '2023-10-10T16:30:00Z',
+    ownedBy: 'me',
+  },
+  {
+    formName: 'Untitled name-9',
+    lastModified: '2023-08-20T15:45:00Z',
+    ownedBy: 'me',
+  },
+  {
+    formName: 'Untitled name-10',
+    lastModified: '2023-09-05T08:00:00Z',
+    ownedBy: 'me',
+  },
+  {
+    formName: 'Untitled name-11',
+    lastModified: '2023-10-10T16:30:00Z',
+    ownedBy: 'me',
+  },
 ];
 
 @Component({
@@ -30,8 +72,14 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class HomepageComponent implements OnInit {
   img = 'assets/formsBlank.png';
   breakpoint: any;
-  displayedColumns: string[] = ['formName', 'ownedBy', 'lastModified', 'action'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = [
+    'formName',
+    'ownedBy',
+    'lastModified',
+    'action',
+  ];
+  dataSource: any = [];
+  ELEMENT_DATA1: any = ELEMENT_DATA;
 
   items = [
     { image: 'assets/formsBlank.png', label: 'Blank form' },
@@ -44,14 +92,17 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateBreakPoint();
+    setTimeout(() => {
+      this.dataSource = this.ELEMENT_DATA1;
+    }, 2000);
   }
 
   onResize(event: any) {
     this.updateBreakPoint();
   }
 
-  openRow(row:PeriodicElement){
-    console.log('click', row)
+  openRow(row: PeriodicElement) {
+    console.log('click', row);
   }
 
   updateBreakPoint() {

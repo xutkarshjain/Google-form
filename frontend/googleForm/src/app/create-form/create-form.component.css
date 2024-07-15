@@ -1,0 +1,13 @@
+.body {
+  padding-top: 115px;
+  height: calc(100% - 115px);
+  background: #f0ebf8;
+}
+
+app-action-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+}

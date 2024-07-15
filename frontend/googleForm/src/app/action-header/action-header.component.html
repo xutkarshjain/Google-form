@@ -1,0 +1,80 @@
+<div class="header">
+  <mat-toolbar>
+    <mat-icon style="font-size: xxx-large; width: auto; height: auto"
+      >description</mat-icon
+    >
+    <span class="gray-text text-like-input">
+      <mat-form-field class="example-full-width">
+        <input matInput [value]="formName" />
+      </mat-form-field>
+    </span>
+    <mat-icon
+      class="material-icons-outlined"
+      style="color: #5f6368; margin-right: 15px"
+      >folder</mat-icon
+    >
+    <mat-icon class="material-icons-outlined" style="color: #5f6368"
+      >star_outline</mat-icon
+    >
+    <span class="example-spacer"></span>
+    <button
+      mat-icon-button
+      class="example-icon favorite-icon gray-text"
+      aria-label="Example icon-button with heart icon"
+    >
+      <mat-icon class="material-icons-outlined" style="color: #5f6368"
+        >palette</mat-icon
+      >
+    </button>
+    <button
+      mat-icon-button
+      class="example-icon favorite-icon gray-text"
+      aria-label="Example icon-button with heart icon"
+    >
+      <mat-icon
+        class="material-icons-outlined"
+        style="color: #5f6368; fill: 5f6368"
+        >visibility</mat-icon
+      >
+    </button>
+    <button
+      mat-icon-button
+      class="example-icon favorite-icon gray-text"
+      aria-label="Example icon-button with heart icon"
+    >
+      <mat-icon class="material-icons-outlined" style="color: #5f6368"
+        >undo</mat-icon
+      >
+    </button>
+    <button
+      mat-icon-button
+      class="example-icon favorite-icon gray-text"
+      aria-label="Example icon-button with heart icon"
+    >
+      <mat-icon class="material-icons-outlined" style="color: #5f6368"
+        >redo</mat-icon
+      >
+    </button>
+    <button mat-raised-button color="primary">Send</button>
+
+    <button
+      mat-icon-button
+      class="example-icon favorite-icon gray-text"
+      aria-label="Example icon-button with heart icon"
+    >
+      <mat-icon class="material-icons-outlined" style="color: #5f6368"
+        >more_vert</mat-icon
+      >
+    </button>
+  </mat-toolbar>
+  <div class="full-width">
+    <div class="tabs-group">
+      <mat-tab-group (selectedTabChange)="tabChange($event)">
+        <mat-tab
+          *ngFor="let tab of tabList; let i = index"
+          [label]="tab"
+        ></mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

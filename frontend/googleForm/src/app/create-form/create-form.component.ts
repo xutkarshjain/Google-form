@@ -8,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class CreateFormComponent implements OnInit {
   sectionName: string = 'Untitled Section';
   sectionDescription: string = '';
-  selectedId: any;
+  selectedItem: any = {
+    id: null,
+    type: '',
+  };
 
   sections: any = [
     {
@@ -20,7 +23,7 @@ export class CreateFormComponent implements OnInit {
       sectionPriority: 1,
       questions: [
         {
-          questionId: 1,
+          questionId: 3,
           questionText: 'What is your age?',
           questionType: 'MCQ',
           required: true,
@@ -32,50 +35,20 @@ export class CreateFormComponent implements OnInit {
               optionText: 'Ramesh',
               optionPriority: 1,
             },
-          ],
-        },
-        {
-          questionId: 2,
-          questionText: 'What is your name?',
-          questionType: 'MCQ',
-          required: true,
-          shuffleOptions: true,
-          questionPriority: 1,
-          options: [
             {
-              optionId: 1,
-              optionText: 'Ramesh',
-              optionPriority: 1,
+              optionId: 2,
+              optionText: 'Suresh',
+              optionPriority: 2,
             },
-          ],
-        },
-      ],
-    },
-    {
-      sectionName: 'Untitled Section',
-      sectionId: 2,
-      sectionDescription: '',
-      selected: true,
-      shuffleQuestions: true,
-      sectionPriority: 1,
-      questions: [
-        {
-          questionId: 1,
-          questionText: 'What is your age?',
-          questionType: 'MCQ',
-          required: true,
-          shuffleOptions: true,
-          questionPriority: 1,
-          options: [
             {
               optionId: 1,
-              optionText: 'Ramesh',
-              optionPriority: 1,
+              optionText: 'Mahesh',
+              optionPriority: 3,
             },
           ],
         },
         {
-          questionId: 2,
+          questionId: 4,
           questionText: 'What is your name?',
           questionType: 'MCQ',
           required: true,
@@ -92,11 +65,17 @@ export class CreateFormComponent implements OnInit {
       ],
     },
   ];
+
+  questionTypes: any = [
+    { value: 'mcq', viewValue: 'Multiple choice' },
+    { value: 'select', viewValue: 'Checkboxes' },
+  ];
   ngOnInit(): void {
     console.log('oninit');
   }
 
-  updateSelected(id: any) {
-    this.selectedId = id;
+  updateSelected(id: any, type: string) {
+    this.selectedItem.id = id;
+    this.selectedItem.type = type;
   }
 }

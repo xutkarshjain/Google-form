@@ -2,14 +2,15 @@
   <app-action-header> </app-action-header>
   <div class="body">
     <div class="form-body">
-      <div
-        class="section"
-        *ngFor="let section of sections"
-        (click)="updateSelected(section.sectionId)"
-      >
+      <div class="section" *ngFor="let section of sections">
         <div
+          (click)="updateSelected(section.sectionId, 'section')"
           class="header selectable"
-          [ngClass]="{ selected: section.sectionId == selectedId }"
+          [ngClass]="{
+            selected:
+              section.sectionId == selectedItem.id &&
+              selectedItem.type == 'section'
+          }"
         >
           <div class="section-name">
             <div class="new-text-like-input section-title">
@@ -31,6 +32,149 @@
                   [value]="section.sectionDescription"
                 />
               </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="questions" *ngFor="let question of section.questions">
+          <div
+            (click)="updateSelected(question.questionId, 'question')"
+            class="selectable"
+            [ngClass]="{
+              selected:
+                question.questionId == selectedItem.id &&
+                selectedItem.type == 'question'
+            }"
+          >
+            <div class=""></div>
+            <div class="container">
+              <div class="item1 question-title">
+                <div style="width: 100%">
+                  <mat-form-field class="" style="width: 100%">
+                    <input
+                      placeholder="Form title"
+                      matInput
+                      [value]="question.questionText"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="item2">
+                <div style="width: 100%">
+                  <mat-form-field
+                    style="
+                      width: 100%;
+                      border-radius: 4px;
+                      border: 1px solid lightgrey;
+                      height: 56px;
+                    "
+                  >
+                    <!-- <mat-label>Favorite food</mat-label> -->
+                    <mat-select>
+                      <mat-select-trigger
+                        style="display: flex; align-items: center"
+                      >
+                        <mat-icon class="material-icons-outlined"
+                          >check_box</mat-icon
+                        >
+                        <span style="margin-left: 10px">Multiple choice</span>
+                      </mat-select-trigger>
+                      <mat-option
+                        *ngFor="let type of questionTypes"
+                        [value]="'hi' + type.value"
+                      >
+                        <mat-icon
+                          class="material-icons-outlined"
+                          style="color: #5f6368"
+                          >radio_button_checked</mat-icon
+                        >
+                        {{ type.viewValue }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="options-body">
+              <div *ngFor="let option of question.options">
+                <div class="option-row">
+                  <mat-icon
+                    class="material-icons-outlined"
+                    style="color: #dadce0"
+                    >radio_button_unchecked
+                  </mat-icon>
+
+                  <span style="flex: 1; margin-left: 10px">
+                    <div class="new-text-like-input option-text">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          placeholder="option"
+                          matInput
+                          [value]="option.optionText"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </span>
+
+                  <button
+                    mat-icon-button
+                    class="example-icon favorite-icon gray-text remove-row"
+                    aria-label="Example icon-button with heart icon"
+                  >
+                    <mat-icon
+                      class="material-icons-outlined"
+                      style="color: #5f6368"
+                      >close
+                    </mat-icon>
+                  </button>
+                </div>
+              </div>
+              <div class="option-row add-new-row">
+                <mat-icon class="material-icons-outlined" style="color: #dadce0"
+                  >radio_button_unchecked
+                </mat-icon>
+
+                <div>
+                  <span class="add-option-text"> Add option </span>
+                  or
+                  <span class="add-other-text"> add "Other" </span>
+                </div>
+              </div>
+            </div>
+            <div class="question-footer">
+              <div class="example-spacer"></div>
+              <button
+                mat-icon-button
+                class="example-icon favorite-icon"
+                aria-label="Example icon-button with heart icon"
+              >
+                <mat-icon>content_copy</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                class="example-icon material-symbols-outlined"
+                aria-label="Example icon-button with share icon"
+              >
+                <mat-icon class="material-icons-outlined">delete</mat-icon>
+              </button>
+              <div class="vert-divider"></div>
+              <button
+                mat-icon-button
+                class="example-icon favorite-icon pressed"
+                aria-label="Example icon-button with heart icon"
+              >
+                <mat-icon>shuffle</mat-icon>
+              </button>
+              <span style="margin-right: 15px; margin-left: 10px"
+                >Required</span
+              >
+              <mat-slide-toggle color="primary"></mat-slide-toggle>
+              <button
+                mat-icon-button
+                class="example-icon material-symbols-outlined"
+                aria-label="Example icon-button with share icon"
+              >
+                <mat-icon>more_vert</mat-icon>
+              </button>
             </div>
           </div>
         </div>

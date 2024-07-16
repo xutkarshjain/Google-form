@@ -7,6 +7,8 @@
   padding-top: 113px;
   height: calc(100% - 113px);
   background: var(--light-color);
+  width: 770px;
+  margin: auto;
 }
 
 app-action-header {
@@ -15,11 +17,6 @@ app-action-header {
   left: 0;
   z-index: 2;
   width: 100%;
-}
-
-.form-body {
-  padding-left: 20%;
-  padding-right: 20%;
 }
 
 .form-body .section {
@@ -32,7 +29,7 @@ app-action-header {
 }
 
 .selectable {
-  width: 100%;
+  width: calc(100% - 40px);
   border: 1px solid rgb(218, 220, 224);
   border-radius: 8px;
   background: white;
@@ -44,4 +41,108 @@ app-action-header {
   border-left: 6px solid #4285f4 !important;
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+}
+
+.item1 {
+  flex: 1 1 100%; /* Default: each item takes full width */
+  margin-right: 0px;
+}
+
+.item2 {
+  flex: 1 1 100%; /* Default: each item takes full width */
+}
+
+@media (min-width: 600px) {
+  .item1 {
+    flex: 1 1 calc(60% - 20px);
+    margin-right: 20px; /* On larger screens: each item takes half the width */
+  }
+  .item2 {
+    flex: 1 1 40%; /* On larger screens: each item takes half the width */
+  }
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.selectable:not(.selected) .question-footer,
+.selectable:not(.selected) .remove-row {
+  display: none;
+}
+
+.selected .question-footer {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  background: white;
+  color: #5f6368;
+  border-top: 1px solid #dadce0;
+}
+
+.vert-divider {
+  border-right: 1px solid lightgray;
+  width: 2px;
+  height: 32px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.pressed mat-icon {
+  color: #9575cd;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.selectable.selected .option-row {
+  margin-bottom: 0;
+}
+
+.selectable.selected .add-option-text {
+  flex: 1;
+  font-size: 14px;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  line-height: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-family: Roboto, sans-serif;
+  color: #0000008a;
+}
+
+.selectable.selected .add-option-text:hover {
+  border-bottom: 1px dashed lightgray;
+}
+
+.add-other-text {
+  color: #1a73e8;
+  font-weight: 500;
+}
+
+.option-row.add-new-row {
+  display: none;
+}
+
+.selectable.selected .option-row.add-new-row {
+  display: flex;
+  height: 48px;
+}
+
+.item2 {
+  display: none;
+}
+
+.selectable.selected .item2 {
+  display: flex;
 }

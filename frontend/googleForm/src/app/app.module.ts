@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
 import { ActionHeaderComponent } from './action-header/action-header.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     FormsModule,
     MatSelectModule,
     MatSlideToggleModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

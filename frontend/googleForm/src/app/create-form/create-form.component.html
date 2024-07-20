@@ -1,6 +1,7 @@
 <div style="background: #f0ebf8; min-height: 100%">
   <form [formGroup]="parentForm">
-    <app-action-header> </app-action-header>
+    <app-action-header [parentForm]="parentForm" (submitFormEvent)="submit()">
+    </app-action-header>
     <div class="body">
       <div class="form-body">
         <div formArrayName="sections">

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-action-header',
@@ -7,14 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActionHeaderComponent implements OnInit {
   selectedTab: string = 'questions';
-  formName: string = 'Untitled Form';
   tabList: string[] = ['Questions', 'Responses', 'Settings'];
-  ngOnInit(): void {
-    console.log('oninit');
-  }
+
+  @Input() parentForm!: FormGroup;
+  @Output() submitFormEvent = new EventEmitter();
+  ngOnInit(): void {}
 
   tabChange(event: any) {
     console.log('event', event);
     this.selectedTab = this.tabList[event.index || 0];
+  }
+
+  submitForm() {
+    this.submitFormEvent.emit();
   }
 }

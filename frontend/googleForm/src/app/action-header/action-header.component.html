@@ -3,11 +3,13 @@
     <mat-icon style="font-size: xxx-large; width: auto; height: auto"
       >description</mat-icon
     >
-    <span class="gray-text text-like-input">
-      <mat-form-field class="example-full-width">
-        <input matInput [value]="formName" />
-      </mat-form-field>
-    </span>
+    <form [formGroup]="parentForm">
+      <span class="gray-text text-like-input">
+        <mat-form-field class="example-full-width">
+          <input matInput formControlName="formName" />
+        </mat-form-field>
+      </span>
+    </form>
     <mat-icon
       class="material-icons-outlined"
       style="color: #5f6368; margin-right: 15px"
@@ -55,7 +57,9 @@
         >redo</mat-icon
       >
     </button>
-    <button mat-raised-button color="primary">Send</button>
+    <button mat-raised-button color="primary" (click)="submitForm()">
+      Save
+    </button>
 
     <button
       mat-icon-button

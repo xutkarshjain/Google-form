@@ -176,4 +176,9 @@ export class CreateFormComponent implements OnInit {
       else return '';
     }
   }
+
+  submit() {
+    //validate request and call save API
+    console.log('save', this.parentForm);
+  }
 }

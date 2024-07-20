@@ -228,13 +228,21 @@
           <div class="vert-divider"></div>
           <button
             mat-icon-button
-            class="example-icon favorite-icon pressed"
+            class="example-icon favorite-icon"
+            [ngClass]="{
+              pressed:
+                getQuestions(sectionIndex).at(questionIndex).value.shuffle
+            }"
             aria-label="Example icon-button with heart icon"
+            (click)="toggleShiffle(sectionIndex, questionIndex)"
           >
             <mat-icon>shuffle</mat-icon>
           </button>
           <span style="margin-right: 15px; margin-left: 10px">Required</span>
-          <mat-slide-toggle color="primary"></mat-slide-toggle>
+          <mat-slide-toggle
+            color="primary"
+            formControlName="required"
+          ></mat-slide-toggle>
           <button
             mat-icon-button
             class="example-icon material-symbols-outlined"

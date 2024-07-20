@@ -181,4 +181,13 @@ export class CreateFormComponent implements OnInit {
     //validate request and call save API
     console.log('save', this.parentForm);
   }
+
+  toggleShiffle(sectionIndex: number, questionIndex: number) {
+    let updatedValue: boolean =
+      !this.getQuestions(sectionIndex).at(questionIndex).value.shuffle;
+    this.getQuestions(sectionIndex)
+      .at(questionIndex)
+      .get('shuffle')
+      ?.setValue(updatedValue);
+  }
 }

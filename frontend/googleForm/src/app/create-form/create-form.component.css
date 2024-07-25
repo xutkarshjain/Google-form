@@ -67,6 +67,26 @@ app-action-header {
   }
 }
 
+@media (min-width: 950px) {
+  .footer {
+    display: none;
+  }
+
+  .floater-menu {
+    display: block !important;
+  }
+
+  .testing {
+    display: block;
+  }
+}
+
+@media (max-width: 949px) {
+  .floater-menu {
+    display: none;
+  }
+}
+
 .example-spacer {
   flex: 1 1 auto;
 }
@@ -159,4 +179,53 @@ app-action-header {
 
 .selectable:not(.selected) {
   height: auto;
+}
+
+.selectable {
+  position: relative;
+}
+
+.floated-menu-container {
+  position: absolute;
+  right: -62px;
+  top: 0px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floated-menu-body {
+  background: white;
+  border-radius: 8px;
+  padding: 10px;
+  padding-bottom: 3px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px,
+    rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
+}
+
+.floated-menu-icon {
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.floated-menu-icon mat-icon,
+.footer-menu-container mat-icon {
+  color: #5f6368;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0px;
+  width: calc(100% - 40px);
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.footer-menu-container {
+  display: flex;
+  padding: 5px;
+  justify-content: space-around;
+  border-radius: 8px 8px 0 0;
+  background: white;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12);
 }

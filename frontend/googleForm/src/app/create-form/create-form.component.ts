@@ -81,90 +81,6 @@ export class CreateFormComponent implements OnInit {
               },
             ],
           },
-          {
-            id: 2,
-            text: 'question-2',
-            type: 'Multiple choice',
-            shuffle: false,
-            required: false,
-            priority: 2,
-            options: [
-              {
-                id: 1,
-                text: 'option-2.1',
-                priority: 1,
-              },
-              {
-                id: 2,
-                text: 'option-2.2',
-                priority: 2,
-              },
-              {
-                id: 3,
-                text: 'option-2.3',
-                priority: 3,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 2,
-        name: 'section-2',
-        description: 'desc-2',
-        priority: 2,
-        shuffle: true,
-        questions: [
-          {
-            id: 3,
-            text: 'question-2.1',
-            type: 'Multiple choice',
-            shuffle: true,
-            required: true,
-            priority: 1,
-            options: [
-              {
-                id: 1,
-                text: 'option-1',
-                priority: 1,
-              },
-              {
-                id: 2,
-                text: 'option-2',
-                priority: 2,
-              },
-              {
-                id: 3,
-                text: 'option-3',
-                priority: 3,
-              },
-            ],
-          },
-          {
-            id: 2,
-            text: 'question-2',
-            type: 'Multiple choice',
-            shuffle: false,
-            required: false,
-            priority: 2,
-            options: [
-              {
-                id: 1,
-                text: 'option-2.1',
-                priority: 1,
-              },
-              {
-                id: 2,
-                text: 'option-2.2',
-                priority: 2,
-              },
-              {
-                id: 3,
-                text: 'option-2.3',
-                priority: 3,
-              },
-            ],
-          },
         ],
       },
     ],
@@ -274,6 +190,7 @@ export class CreateFormComponent implements OnInit {
     this.selectedItem.sectionIndex = sectionIndex;
     this.selectedItem.questionIndex = questionIndex;
     this.selectedItem.type = type;
+    console.log('updateSelected', this.selectedItem);
   }
 
   getIconForQuestionType(type: string, filled: boolean) {
@@ -300,5 +217,33 @@ export class CreateFormComponent implements OnInit {
       .at(questionIndex)
       .get('shuffle')
       ?.setValue(updatedValue);
+  }
+
+  isSelected(sectionIndex: number, questionIndex: number, type: string) {
+    return (
+      sectionIndex == this.selectedItem.sectionIndex &&
+      questionIndex == this.selectedItem.questionIndex &&
+      type == this.selectedItem.type
+    );
+  }
+
+  addQuestionWrapper(event: any, data?: object) {
+    event.stopPropagation();
+    this.addQuestion(this.selectedItem.sectionIndex, data);
+  }
+
+  addSectionWrapper(event: any) {
+    event.stopPropagation();
+    this.addSection();
+  }
+
+  copyQuestion(event: any, sectionIndex: number, questionIndex: number) {
+    // let dataToCopy =
+    this.addQuestionWrapper(
+      event,
+      JSON.parse(
+        JSON.stringify(this.getQuestions(sectionIndex).at(questionIndex).value)
+      )
+    );
   }
 }

@@ -1,4 +1,4 @@
-<div style="background: #f0ebf8; min-height: 100%">
+<div style="background: #f0ebf8; min-height: 100%; padding-bottom: 30px">
   <form [formGroup]="parentForm">
     <app-action-header [parentForm]="parentForm" (submitFormEvent)="submit()">
     </app-action-header>
@@ -17,11 +17,11 @@
           </ng-container>
         </div>
       </div>
-      <button mat-raised-button color="primary" (click)="addSection()">
-        Add section
-      </button>
     </div>
   </form>
+  <ng-container>
+    <ng-container *ngTemplateOutlet="footerMenu"></ng-container>
+  </ng-container>
 </div>
 
 <ng-template #sectionTemplate let-section let-sectionIndex="index">
@@ -31,11 +31,19 @@
         (click)="updateSelected(sectionIndex, -1, 'section')"
         class="header selectable"
         [ngClass]="{
-          selected:
-            sectionIndex == selectedItem.sectionIndex &&
-            selectedItem.type == 'section'
+          selected: isSelected(sectionIndex, -1, 'section')
         }"
       >
+        <ng-container *ngIf="isSelected(sectionIndex, -1, 'section')">
+          <ng-container
+            *ngTemplateOutlet="
+              floatedMenu;
+              context: {
+                sectionIndex: sectionIndex,
+              }
+            "
+          ></ng-container>
+        </ng-container>
         <div class="section-name">
           <div class="new-text-like-input section-title">
             <mat-form-field class="example-full-width">
@@ -75,13 +83,6 @@
           ></ng-container>
         </ng-container>
       </div>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="addQuestion(sectionIndex)"
-      >
-        Add question
-      </button>
     </div>
   </div>
 </ng-template>
@@ -98,12 +99,22 @@
         (click)="updateSelected(sectionIndex, questionIndex, 'question')"
         class="selectable"
         [ngClass]="{
-          selected:
-            sectionIndex == selectedItem.sectionIndex &&
-            questionIndex == selectedItem.questionIndex &&
-            selectedItem.type == 'question'
+          selected: isSelected(sectionIndex, questionIndex, 'question')
         }"
       >
+        <ng-container
+          *ngIf="isSelected(sectionIndex, questionIndex, 'question')"
+        >
+          <ng-container
+            *ngTemplateOutlet="
+              floatedMenu;
+              context: {
+                sectionIndex: sectionIndex,
+                questionIndex: questionIndex
+              }
+            "
+          ></ng-container>
+        </ng-container>
         <div class=""></div>
         <div class="container">
           <div class="item1 question-title">
@@ -214,6 +225,9 @@
             mat-icon-button
             class="example-icon favorite-icon"
             aria-label="Example icon-button with heart icon"
+            matTooltip="Duplicate"
+            matTooltipPosition="below"
+            (click)="copyQuestion($event, sectionIndex, questionIndex)"
           >
             <mat-icon>content_copy</mat-icon>
           </button>
@@ -221,6 +235,8 @@
             mat-icon-button
             class="example-icon material-symbols-outlined"
             aria-label="Example icon-button with share icon"
+            matTooltip="Delete"
+            matTooltipPosition="below"
             (click)="removeQuestion(sectionIndex, questionIndex)"
           >
             <mat-icon class="material-icons-outlined">delete</mat-icon>
@@ -235,6 +251,8 @@
             }"
             aria-label="Example icon-button with heart icon"
             (click)="toggleShiffle(sectionIndex, questionIndex)"
+            matTooltip="Shuffle options"
+            matTooltipPosition="below"
           >
             <mat-icon>shuffle</mat-icon>
           </button>
@@ -247,6 +265,8 @@
             mat-icon-button
             class="example-icon material-symbols-outlined"
             aria-label="Example icon-button with share icon"
+            matTooltip="More options (Future scope)"
+            matTooltipPosition="below"
           >
             <mat-icon>more_vert</mat-icon>
           </button>
@@ -290,10 +310,129 @@
         class="example-icon favorite-icon gray-text remove-row"
         aria-label="Example icon-button with heart icon"
         (click)="removeOption(sectionIndex, questionIndex, optionIndex)"
+        matTooltip="Remove"
+        matTooltipPosition="below"
       >
         <mat-icon class="material-icons-outlined" style="color: #5f6368"
           >close
         </mat-icon>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template
+  #floatedMenu
+  let-sectionIndex="sectionIndex"
+  let-questionIndex="questionIndex"
+>
+  <div class="floater-menu">
+    <div class="floated-menu-container">
+      <div class="floated-menu-body">
+        <div
+          class="floated-menu-icon"
+          (click)="addQuestionWrapper($event)"
+          matTooltip="Add question"
+          matTooltipPosition="right"
+        >
+          <mat-icon class="" style="color: #5f6368">add_circle </mat-icon>
+        </div>
+        <div class="floated-menu-icon">
+          <mat-icon
+            class="material-icons-outlined"
+            style="color: #5f6368"
+            matTooltip="Disabled button (Future scope)"
+            matTooltipPosition="right"
+            >upload_file
+          </mat-icon>
+        </div>
+        <div class="floated-menu-icon">
+          <mat-icon
+            class="material-icons-outlined"
+            style="color: #5f6368"
+            matTooltip="Disabled button (Future scope)"
+            matTooltipPosition="right"
+            >format_size
+          </mat-icon>
+        </div>
+        <div class="floated-menu-icon">
+          <mat-icon
+            class="material-icons-outlined"
+            style="color: #5f6368"
+            matTooltip="Disabled button (Future scope)"
+            matTooltipPosition="right"
+            >image
+          </mat-icon>
+        </div>
+        <div class="floated-menu-icon">
+          <mat-icon
+            class="material-icons-outlined"
+            style="color: #5f6368"
+            matTooltip="Disabled button (Future scope)"
+            matTooltipPosition="right"
+            >smart_display
+          </mat-icon>
+        </div>
+        <div class="floated-menu-icon" (click)="addSectionWrapper($event)">
+          <mat-icon
+            class="material-icons-outlined"
+            matTooltip="Add section"
+            matTooltipPosition="right"
+            style="color: #5f6368"
+            >splitscreen
+          </mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #footerMenu>
+  <div class="footer">
+    <div class="footer-menu-container">
+      <button
+        mat-icon-button
+        matTooltip="Add question"
+        matTooltipPosition="above"
+        (click)="addQuestionWrapper($event)"
+      >
+        <mat-icon class="material-icons-outlined">add_circle</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        matTooltip="Disabled button (Future scope)"
+        matTooltipPosition="above"
+      >
+        <mat-icon class="material-icons-outlined">upload_file</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        matTooltip="Disabled button (Future scope)"
+        matTooltipPosition="above"
+      >
+        <mat-icon class="material-icons-outlined">format_size</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        matTooltip="Disabled button (Future scope)"
+        matTooltipPosition="above"
+      >
+        <mat-icon class="material-icons-outlined">image</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        matTooltip="Disabled button (Future scope)"
+        matTooltipPosition="above"
+      >
+        <mat-icon class="material-icons-outlined">smart_display</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        matTooltip="Add section"
+        matTooltipPosition="above"
+        (click)="addSectionWrapper($event)"
+      >
+        <mat-icon class="material-icons-outlined">splitscreen</mat-icon>
       </button>
     </div>
   </div>

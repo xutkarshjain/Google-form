@@ -229,3 +229,28 @@ app-action-header {
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
 }
+
+.section-name-and-options {
+  width: 100%;
+}
+
+.section-name-and-options .section-name,
+.section-name-and-options .section-more-options {
+  display: inline-block;
+}
+
+.section-name-and-options .section-name {
+  width: calc(100% - 50px);
+}
+
+.section-name-and-options .section-name.full-width {
+  width: 100%;
+}
+
+.section-name-and-options .section-more-options {
+  width: 50px;
+}
+
+.selectable:not(.selected) .section-name-and-options .section-more-options {
+  display: none;
+}

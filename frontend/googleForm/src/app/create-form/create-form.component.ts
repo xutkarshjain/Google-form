@@ -232,18 +232,29 @@ export class CreateFormComponent implements OnInit {
     this.addQuestion(this.selectedItem.sectionIndex, data);
   }
 
-  addSectionWrapper(event: any) {
+  addSectionWrapper(event: any, data?: object) {
     event.stopPropagation();
-    this.addSection();
+    this.addSection(data);
   }
 
-  copyQuestion(event: any, sectionIndex: number, questionIndex: number) {
-    // let dataToCopy =
+  removeSectionWrapper(event: any) {
+    let sectionIndex = this.selectedItem.sectionIndex;
+    event.stopPropagation();
+    this.removeSection(sectionIndex);
+  }
+
+  duplicateQuestion(event: any, sectionIndex: number, questionIndex: number) {
     this.addQuestionWrapper(
       event,
       JSON.parse(
         JSON.stringify(this.getQuestions(sectionIndex).at(questionIndex).value)
       )
     );
+  }
+
+  duplicateSection(event: any) {
+    let sectionIndex = this.selectedItem.sectionIndex;
+    let data = JSON.parse(JSON.stringify(this.sections.at(sectionIndex).value));
+    this.addSection(data);
   }
 }

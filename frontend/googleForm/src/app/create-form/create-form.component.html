@@ -25,13 +25,19 @@
 </div>
 
 <ng-template #sectionTemplate let-section let-sectionIndex="index">
-  <div [formGroup]="section">
-    <div class="section">
+  <div [formGroup]="section" class="section-container">
+    <div
+      class="section"
+      [ngClass]="{
+        multi_section: sections.length > 1
+      }"
+    >
       <div
         (click)="updateSelected(sectionIndex, -1, 'section')"
         class="header selectable"
         [ngClass]="{
-          selected: isSelected(sectionIndex, -1, 'section')
+          selected: isSelected(sectionIndex, -1, 'section'),
+          multi_section: sections.length > 1
         }"
       >
         <ng-container *ngIf="isSelected(sectionIndex, -1, 'section')">
@@ -111,6 +117,12 @@
             "
           ></ng-container>
         </ng-container>
+      </div>
+    </div>
+
+    <div class="section-number" *ngIf="sections.length > 1">
+      <div style="padding: 8px 16px">
+        Section {{ sectionIndex + 1 }} of {{ sections.length }}
       </div>
     </div>
   </div>

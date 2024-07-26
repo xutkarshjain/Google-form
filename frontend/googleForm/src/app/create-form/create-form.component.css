@@ -24,8 +24,42 @@ app-action-header {
   padding: 10px;
 }
 
-.section .header {
+.section-container:first-child .section .header {
   border-top: 10px solid var(--dark-color);
+}
+
+.section-container {
+  position: relative;
+}
+
+.section-container:first-child .section.multi_section {
+  margin-top: 35px;
+}
+
+.section-container:first-child .section-number {
+  border-bottom: 8px solid var(--dark-color);
+}
+
+.section-number {
+  position: absolute;
+  background-color: var(--dark-color);
+  color: white;
+  top: -24px;
+  left: 10px;
+  border-bottom: none;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.header.selectable.multi_section {
+  border-top-left-radius: 0;
+}
+
+.color-filler {
+  width: 8px;
+  height: 8px;
+  width: 100%;
+  background: white;
+  border-left: 6px solid #4285f4;
 }
 
 .selectable {

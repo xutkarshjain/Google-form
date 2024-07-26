@@ -37,14 +37,14 @@ app-action-header {
 }
 
 .section-container:first-child .section-number {
-  border-bottom: 8px solid var(--dark-color);
+  border-bottom: 9px solid var(--dark-color);
 }
 
 .section-number {
   position: absolute;
   background-color: var(--dark-color);
   color: white;
-  top: -24px;
+  top: -25px;
   left: 10px;
   border-bottom: none;
   border-radius: 8px 8px 0px 0px;
@@ -152,7 +152,15 @@ app-action-header {
 }
 
 .pressed mat-icon {
-  color: #9575cd;
+  opacity: 1;
+}
+
+.unPressed mat-icon {
+  opacity: 0;
+}
+
+button.pressed {
+  background: #f6fafe;
 }
 
 .option-row {

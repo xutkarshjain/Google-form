@@ -210,7 +210,7 @@ export class CreateFormComponent implements OnInit {
     console.log('save', this.parentForm);
   }
 
-  toggleShiffle(sectionIndex: number, questionIndex: number) {
+  toggleShuffle(sectionIndex: number, questionIndex: number) {
     let updatedValue: boolean =
       !this.getQuestions(sectionIndex).at(questionIndex).value.shuffle;
     this.getQuestions(sectionIndex)
@@ -243,6 +243,12 @@ export class CreateFormComponent implements OnInit {
     this.removeSection(sectionIndex);
   }
 
+  toggleShuffleWrapper() {
+    let sectionIndex = this.selectedItem.sectionIndex;
+    let questionIndex = this.selectedItem.questionIndex;
+    this.toggleShuffle(sectionIndex, questionIndex);
+  }
+
   duplicateQuestion(event: any, sectionIndex: number, questionIndex: number) {
     this.addQuestionWrapper(
       event,
@@ -256,5 +262,11 @@ export class CreateFormComponent implements OnInit {
     let sectionIndex = this.selectedItem.sectionIndex;
     let data = JSON.parse(JSON.stringify(this.sections.at(sectionIndex).value));
     this.addSection(data);
+  }
+
+  isShuffleOn() {
+    let sectionIndex = this.selectedItem.sectionIndex;
+    let questionIndex = this.selectedItem.questionIndex;
+    return this.getQuestions(sectionIndex).at(questionIndex).value.shuffle;
   }
 }

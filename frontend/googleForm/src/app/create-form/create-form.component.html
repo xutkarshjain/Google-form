@@ -68,12 +68,12 @@
           <div *ngIf="sections.length > 1" class="section-more-options">
             <button
               mat-icon-button
-              [matMenuTriggerFor]="menu"
+              [matMenuTriggerFor]="sectionsMenu"
               aria-label="Example icon-button with a menu"
             >
               <mat-icon>more_vert</mat-icon>
             </button>
-            <mat-menu #menu="matMenu">
+            <mat-menu #sectionsMenu="matMenu">
               <button mat-menu-item (click)="duplicateSection($event)">
                 <span>Duplicate section</span>
               </button>
@@ -283,7 +283,7 @@
             <mat-icon class="material-icons-outlined">delete</mat-icon>
           </button>
           <div class="vert-divider"></div>
-          <button
+          <!-- <button
             mat-icon-button
             class="example-icon favorite-icon"
             [ngClass]="{
@@ -296,21 +296,46 @@
             matTooltipPosition="below"
           >
             <mat-icon>shuffle</mat-icon>
-          </button>
+          </button> -->
           <span style="margin-right: 15px; margin-left: 10px">Required</span>
           <mat-slide-toggle
             color="primary"
             formControlName="required"
           ></mat-slide-toggle>
-          <button
-            mat-icon-button
-            class="example-icon material-symbols-outlined"
-            aria-label="Example icon-button with share icon"
-            matTooltip="More options (Future scope)"
-            matTooltipPosition="below"
-          >
-            <mat-icon>more_vert</mat-icon>
-          </button>
+          <div class="section-more-options">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="optionsMenu"
+              aria-label="Example icon-button with a menu"
+              matTooltip="More options"
+              matTooltipPosition="below"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #optionsMenu="matMenu">
+              <button mat-menu-item disabled class="unPressed">
+                <mat-icon>check</mat-icon>
+                <span>Description</span>
+              </button>
+              <button mat-menu-item disabled class="unPressed">
+                <mat-icon>check</mat-icon>
+                <span> Response validation</span>
+              </button>
+              <mat-divider></mat-divider>
+              <button
+                mat-menu-item
+                class=""
+                [ngClass]="{
+                  pressed: isShuffleOn(),
+                  unPressed: !isShuffleOn(),
+                }"
+                (click)="toggleShuffleWrapper()"
+              >
+                <mat-icon>check</mat-icon>
+                <span>Shuffle options order</span>
+              </button>
+            </mat-menu>
+          </div>
         </div>
       </div>
     </div>

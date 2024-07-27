@@ -1,0 +1,129 @@
+:host {
+  --dark-color: #673ab7;
+  --light-color: #f0ebf8;
+}
+
+.body {
+  background: var(--light-color);
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  max-width: 640px;
+  width: auto;
+  margin: auto;
+  padding: 12px;
+}
+
+.card {
+  margin-top: 12px;
+  background-color: #fff;
+  border: 1px solid rgb(218, 220, 224);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding-top: 22px;
+  padding-top: 24px;
+}
+
+.px24 {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.form-header {
+  border-top: 10px solid var(--dark-color);
+  margin-top: 0;
+}
+
+.form-info {
+  padding-bottom: 12px;
+}
+
+.name {
+  font-size: 24pt;
+  font-family: "docs-Roboto", Helvetica, Arial, sans-serif;
+  letter-spacing: 0;
+  margin-bottom: 12px;
+}
+
+.description {
+  font-size: 11pt;
+  line-height: 15pt;
+  letter-spacing: 0;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  line-height: 20px;
+  color: rgb(32, 33, 36);
+  margin-top: 24px;
+}
+
+.form-instruction {
+  color: rgb(217, 48, 37);
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+.question {
+  padding-left: 15px;
+  padding-bottom: 24px;
+}
+
+.question-text {
+  font-size: 12pt;
+  font-family: "docs-Roboto", Helvetica, Arial, sans-serif;
+  letter-spacing: 0;
+  margin-bottom: 16px;
+  margin-left: 10px;
+}
+
+.required {
+  color: red;
+}
+
+.mat-mdc-radio-button.mat-primary,
+.mat-mdc-checkbox {
+  display: block;
+}
+
+.buttons {
+  display: flex;
+  padding-bottom: 10px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.policy-text {
+  margin: 16px 0;
+  padding: 0 16px;
+  font: 400 12px Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+  margin: 16px 0;
+  padding: 0 16px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.66);
+}
+
+.policy-text a {
+  color: rgba(0, 0, 0, 0.66);
+}
+
+.google-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.google-logo img {
+  padding: 5px;
+}
+
+.forms-logo {
+  font-size: 22.1px;
+  color: #a7a4ad;
+}

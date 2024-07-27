@@ -22,6 +22,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
+import { ViewFormComponent } from './view-form/view-form.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,7 @@ import { MatMenuModule } from '@angular/material/menu';
     HomepageComponent,
     CreateFormComponent,
     ActionHeaderComponent,
+    ViewFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +53,8 @@ import { MatMenuModule } from '@angular/material/menu';
     ReactiveFormsModule,
     MatTooltipModule,
     MatMenuModule,
+    MatRadioModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

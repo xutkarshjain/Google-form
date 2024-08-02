@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+:host {
+  --dark-color: #673ab7;
+  --light-color: #f0ebf8;
+}
 
 html,
 body {
@@ -217,4 +221,8 @@ div {
 
 .selectable:not(.selected) .item1 .mat-mdc-form-field-subscript-wrapper {
   display: none;
+}
+
+.fg-dark span.mdc-button__label {
+  color: var(--dark-color) !important;
 }

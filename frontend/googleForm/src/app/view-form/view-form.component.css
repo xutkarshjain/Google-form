@@ -19,7 +19,6 @@
 }
 
 .card {
-  margin-top: 12px;
   background-color: #fff;
   border: 1px solid rgb(218, 220, 224);
   border-radius: 8px;
@@ -38,18 +37,40 @@
   margin-top: 0;
 }
 
+.section .description {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: white;
+  border: 1px solid rgb(218, 220, 224);
+  border-top: 0px;
+  margin-bottom: 12px;
+  padding: 24px;
+  padding-left: 17px;
+}
+
+.section-header {
+  padding: 12px 24px;
+  background: var(--dark-color);
+  border-radius: 8px 8px 0 0;
+}
+
+.section-header .name {
+  color: white;
+  font-size: 16px;
+  font-family: docs-Roboto, Helvetica, Arial, sans-serif;
+}
 .form-info {
   padding-bottom: 12px;
 }
 
-.name {
+.form-name {
   font-size: 24pt;
   font-family: "docs-Roboto", Helvetica, Arial, sans-serif;
   letter-spacing: 0;
   margin-bottom: 12px;
 }
 
-.description {
+.form-description {
   font-size: 11pt;
   line-height: 15pt;
   letter-spacing: 0;
@@ -126,4 +147,25 @@
 .forms-logo {
   font-size: 22.1px;
   color: #a7a4ad;
+}
+
+.footer-button-group {
+  display: flex;
+}
+
+.footer-button-group > div {
+  width: 50%;
+  display: flex;
+}
+
+.footer-button-group .action-buttons button {
+  margin-right: 20px;
+}
+
+.footer-button-group .clear-button button {
+  margin-left: auto;
+}
+
+.submit-footer {
+  margin-top: 40px;
 }

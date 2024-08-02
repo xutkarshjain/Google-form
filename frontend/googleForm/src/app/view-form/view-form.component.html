@@ -1,64 +1,157 @@
 <div class="body">
   <div class="container">
-    <div class="form-header card">
-      <div class="form-info px24">
-        <div class="name">Untitled section</div>
-        <div class="description">I am description</div>
-      </div>
-      <!-- <mat-divider></mat-divider>
-      <div class="userInfo"></div> -->
-      <mat-divider></mat-divider>
-      <div class="form-instruction px24">* Indicates required question</div>
-    </div>
-    <div class="question card px24">
-      <div class="question-text">
-        I am question <span class="required">*</span>
-      </div>
-      <div class="options">
-        <mat-radio-group aria-label="Select an option" color="primary">
-          <mat-radio-button value="1">I am option 1</mat-radio-button>
-          <mat-radio-button value="2">I am option 2</mat-radio-button>
-          <mat-radio-button value="3">I am option 3</mat-radio-button>
-        </mat-radio-group>
-      </div>
-    </div>
-    <div class="question card px24">
-      <div class="question-text">
-        I am question <span class="required">*</span>
-      </div>
-      <div class="options">
-        <mat-checkbox class="example-margin" color="primary"
-          >Option 1</mat-checkbox
-        >
-        <mat-checkbox class="example-margin" color="primary"
-          >Option 2</mat-checkbox
-        >
-        <mat-checkbox class="example-margin" color="primary"
-          >Option 3</mat-checkbox
-        >
-      </div>
-    </div>
-    <div class="submit-footer">
-      <div class="buttons">
-        <button mat-raised-button color="primary">Submit</button>
-        <div class="spacer"></div>
-        <button mat-button color="primary">Clear form</button>
-      </div>
-      <div class="policy-text">
-        This content is neither created nor endorsed by Google..
-        <a
-          href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdGA7g8YeOVoZeiGmxVnniAP5XgTIvd55cj6DBULzWZUga-XQ/reportabuse?source=https://docs.google.com/forms/d/e/1FAIpQLSdGA7g8YeOVoZeiGmxVnniAP5XgTIvd55cj6DBULzWZUga-XQ/viewform"
-          >Report Abuse
-        </a>
-        -
-        <a href="https://policies.google.com/terms"> Terms of Service </a>
-        -
-        <a href="https://policies.google.com/privacy"> Privacy Policy </a>
-      </div>
-      <div class="google-logo">
-        <img src="assets/googlelogo.svg" alt="Google" />
-        <div class="forms-logo">forms</div>
-      </div>
-    </div>
+    <ng-container
+      *ngTemplateOutlet="
+        formheader;
+        context: {
+          $implicit: getFirstSection()
+        }
+      "
+    >
+    </ng-container>
+
+    <ng-container
+      *ngTemplateOutlet="
+        sectionTemplate;
+        context: {
+          $implicit: responseData.sections[currentSectionindex],
+          isFirst: currentSectionindex == 0
+        }
+      "
+    >
+    </ng-container>
+    <ng-container *ngTemplateOutlet="footerButtons"> </ng-container>
+    <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
   </div>
 </div>
+
+<ng-template #formheader let-section>
+  <div class="form-header card">
+    <div class="form-info px24">
+      <div class="form-name">{{ section.name }}</div>
+      <div class="form-description">{{ section.description }}</div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="form-instruction px24">* Indicates required question</div>
+  </div>
+</ng-template>
+
+<ng-template #sectionTemplate let-section let-isFirst="isFirst">
+  <div *ngIf="!isFirst" class="section">
+    <div class="section-header px24">
+      <div class="name">{{ section.name }}</div>
+    </div>
+    <div *ngIf="section.description != ''" class="description">
+      {{ section.description }}
+    </div>
+  </div>
+  <ng-container *ngFor="let question of section.questions">
+    <ng-container
+      *ngTemplateOutlet="
+        questionTemplate;
+        context: {
+          $implicit: question
+        }
+      "
+    ></ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #questionTemplate let-question>
+  <div class="question mcq card px24">
+    <div class="question-text">
+      {{ question.text }} <span class="required">*</span>
+    </div>
+    <ng-container *ngIf="question.type == 'mcq'">
+      <ng-container
+        *ngTemplateOutlet="
+          mcqTemplate;
+          context: { $implicit: question.options }
+        "
+      ></ng-container>
+    </ng-container>
+    <ng-container *ngIf="question.type == 'Checkboxes'">
+      <ng-container
+        *ngTemplateOutlet="
+          checkboxesTemplate;
+          context: { $implicit: question.options }
+        "
+      ></ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #mcqTemplate let-options>
+  <div class="options">
+    <mat-radio-group aria-label="Select an option" color="primary">
+      <mat-radio-button [value]="option.id" *ngFor="let option of options">{{
+        option.text
+      }}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+</ng-template>
+
+<ng-template #checkboxesTemplate let-options>
+  <div class="options">
+    <mat-checkbox
+      class="example-margin"
+      color="primary"
+      *ngFor="let option of options"
+      >{{ option.text }}</mat-checkbox
+    >
+  </div>
+</ng-template>
+
+<ng-template #footerButtons>
+  <div class="footer-button-group">
+    <div class="action-buttons">
+      <button
+        mat-raised-button
+        (click)="backSection()"
+        class="fg-dark"
+        *ngIf="currentSectionindex > 0"
+      >
+        Back
+      </button>
+      <button
+        *ngIf="currentSectionindex < responseData.sections.length - 1"
+        mat-raised-button
+        (click)="nextSection()"
+        class="fg-dark"
+      >
+        Next
+      </button>
+      <button
+        *ngIf="currentSectionindex == responseData.sections.length - 1"
+        mat-raised-button
+        color="primary"
+        (click)="submitForm()"
+      >
+        Submit
+      </button>
+    </div>
+    <div class="clear-button">
+      <button mat-button color="primary">Clear form</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #footerTemplate>
+  <div class="submit-footer">
+    <div class="policy-text">
+      This content is neither created nor endorsed by Google..
+      <a
+        href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdGA7g8YeOVoZeiGmxVnniAP5XgTIvd55cj6DBULzWZUga-XQ/reportabuse?source=https://docs.google.com/forms/d/e/1FAIpQLSdGA7g8YeOVoZeiGmxVnniAP5XgTIvd55cj6DBULzWZUga-XQ/viewform"
+        >Report Abuse
+      </a>
+      -
+      <a href="https://policies.google.com/terms"> Terms of Service </a>
+      -
+      <a href="https://policies.google.com/privacy"> Privacy Policy </a>
+    </div>
+    <div class="google-logo">
+      <img src="assets/googlelogo.svg" alt="Google" />
+      <div class="forms-logo">forms</div>
+    </div>
+  </div>
+</ng-template>

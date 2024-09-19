@@ -207,7 +207,6 @@ export class CreateFormComponent implements OnInit {
 
   submit() {
     //validate request and call save API
-    console.log('save', this.parentForm);
   }
 
   toggleShuffle(sectionIndex: number, questionIndex: number) {

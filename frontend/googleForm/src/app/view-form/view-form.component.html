@@ -1,27 +1,39 @@
 <div class="body">
   <div class="container">
-    <ng-container
-      *ngTemplateOutlet="
-        formheader;
-        context: {
-          $implicit: getFirstSection()
-        }
-      "
-    >
-    </ng-container>
+    <form [formGroup]="viewForm">
+      <ng-container
+        *ngTemplateOutlet="
+          formheader;
+          context: {
+            $implicit: getFirstSection()
+          }
+        "
+      >
+      </ng-container>
+      <div formArrayName="sections">
+        <ng-container
+          *ngFor="let section of sections.controls; let sectionIndex = index"
+        >
+          <ng-container *ngIf="currentSectionindex == sectionIndex">
+            <ng-container
+              *ngTemplateOutlet="
+                sectionTemplate;
+                context: {
+                  $implicit: section,
+                  sectionData: responseData.sections[sectionIndex],
+                  isFirst: currentSectionindex == 0,
+                  sectionIndex: sectionIndex
+                }
+              "
+            >
+            </ng-container>
+          </ng-container>
+        </ng-container>
 
-    <ng-container
-      *ngTemplateOutlet="
-        sectionTemplate;
-        context: {
-          $implicit: responseData.sections[currentSectionindex],
-          isFirst: currentSectionindex == 0
-        }
-      "
-    >
-    </ng-container>
-    <ng-container *ngTemplateOutlet="footerButtons"> </ng-container>
-    <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="footerButtons"> </ng-container>
+        <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -36,58 +48,112 @@
   </div>
 </ng-template>
 
-<ng-template #sectionTemplate let-section let-isFirst="isFirst">
-  <div *ngIf="!isFirst" class="section">
-    <div class="section-header px24">
-      <div class="name">{{ section.name }}</div>
+<ng-template
+  #sectionTemplate
+  let-section
+  let-isFirst="isFirst"
+  let-sectionData="sectionData"
+  let-sectionIndex="sectionIndex"
+>
+  <div [formGroup]="section">
+    <div *ngIf="!isFirst" class="section">
+      <div class="section-header px24">
+        <div class="name">{{ sectionData.name }}</div>
+      </div>
+      <div *ngIf="sectionData.description != ''" class="description">
+        {{ sectionData.description }}
+      </div>
     </div>
-    <div *ngIf="section.description != ''" class="description">
-      {{ section.description }}
-    </div>
-  </div>
-  <ng-container *ngFor="let question of section.questions">
-    <ng-container
-      *ngTemplateOutlet="
-        questionTemplate;
-        context: {
-          $implicit: question
-        }
-      "
-    ></ng-container>
-  </ng-container>
-</ng-template>
-
-<ng-template #questionTemplate let-question>
-  <div class="question mcq card px24">
-    <div class="question-text">
-      {{ question.text }} <span class="required">*</span>
-    </div>
-    <ng-container *ngIf="question.type == 'mcq'">
+    <div formArrayName="questions">
       <ng-container
-        *ngTemplateOutlet="
-          mcqTemplate;
-          context: { $implicit: question.options }
+        *ngFor="
+          let question of getQuestion(sectionIndex).controls;
+          let questionIndex = index
         "
-      ></ng-container>
-    </ng-container>
-    <ng-container *ngIf="question.type == 'Checkboxes'">
-      <ng-container
-        *ngTemplateOutlet="
-          checkboxesTemplate;
-          context: { $implicit: question.options }
-        "
-      ></ng-container>
-    </ng-container>
+      >
+        <ng-container
+          *ngTemplateOutlet="
+            questionTemplate;
+            context: {
+              $implicit: question,
+              sectionIndex: sectionIndex,
+              questionIndex: questionIndex,
+              questionData: sectionData.questions[questionIndex]
+            }
+          "
+        ></ng-container>
+      </ng-container>
+    </div>
   </div>
 </ng-template>
 
-<ng-template #mcqTemplate let-options>
-  <div class="options">
-    <mat-radio-group aria-label="Select an option" color="primary">
-      <mat-radio-button [value]="option.id" *ngFor="let option of options">{{
-        option.text
-      }}</mat-radio-button>
-    </mat-radio-group>
+<ng-template
+  #questionTemplate
+  let-question
+  let-sectionIndex="sectionIndex"
+  let-questionIndex="questionIndex"
+  let-questionData="questionData"
+>
+  <div [formGroup]="question">
+    <div class="question mcq card px24">
+      <div class="question-text">
+        {{ questionData.text }}
+
+        <span *ngIf="questionData.required" class="required">*</span>
+      </div>
+      <div>
+        <div class="options">
+          <div formArrayName="options">
+            <div *ngIf="questionData.type == 'mcq'">
+              <div
+                *ngFor="
+                  let option of getOptions(sectionIndex, questionIndex)
+                    .controls;
+                  let optionIndex = index
+                "
+              >
+                <div *ngIf="optionIndex == 0">
+                  <mat-radio-group
+                    aria-label="Select an option"
+                    color="primary"
+                    [formControlName]="optionIndex"
+                  >
+                    <mat-radio-button
+                      *ngFor="let option of questionData.options"
+                      [value]="option.id"
+                    >
+                      {{ option.text }}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="questionData.type == 'Checkboxes'">
+              <div *ngFor="let option of questionData.options">
+                <mat-checkbox
+                  [id]="option.id"
+                  color="primary"
+                  [checked]="
+                    isCheckBoxChecked(sectionIndex, questionIndex, option.id)
+                  "
+                  (change)="
+                    onCheckboxChange(
+                      $event,
+                      option.id,
+                      sectionIndex,
+                      questionIndex
+                    )
+                  "
+                >
+                  {{ option.text }}
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </ng-template>
 
@@ -151,7 +217,7 @@
     </div>
     <div class="google-logo">
       <img src="assets/googlelogo.svg" alt="Google" />
-      <div class="forms-logo">forms</div>
+      <div class="forms-logo">Forms</div>
     </div>
   </div>
 </ng-template>

@@ -29,6 +29,7 @@ import { FormSettingsComponent } from './form-settings/form-settings.component';
 import { FormResponsesComponent } from './form-responses/form-responses.component';
 import { MatCardModule } from '@angular/material/card';
 import { NgChartsModule } from 'ng2-charts';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { NgChartsModule } from 'ng2-charts';
     MatCheckboxModule,
     MatCardModule,
     NgChartsModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -7,6 +7,12 @@ mat-toolbar {
   z-index: 2;
 }
 
+.product-name {
+  color: black;
+  font-family: "Product Sans", Arial, sans-serif;
+  font-size: 22px;
+}
+
 .example-spacer {
   flex: 1 1 auto;
 }
@@ -90,4 +96,18 @@ mat-toolbar {
 .body {
   padding-top: 64px;
   height: calc(100% - 64px);
+}
+
+.empty-card {
+  padding: 40px !important;
+  text-align: center;
+}
+
+.empty-card div {
+  font-size: large;
+}
+
+.empty-card span {
+  color: darkslategray;
+  margin-top: 10px;
 }

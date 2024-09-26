@@ -14,6 +14,7 @@ export class CreateFormComponent implements OnInit {
     type: '',
   };
 
+  selectedTab: string = 'Questions';
   defaultData: any = {
     formName: 'Untitled Form',
     formId: null,
@@ -267,5 +268,10 @@ export class CreateFormComponent implements OnInit {
     let sectionIndex = this.selectedItem.sectionIndex;
     let questionIndex = this.selectedItem.questionIndex;
     return this.getQuestions(sectionIndex).at(questionIndex).value.shuffle;
+  }
+
+  tabChange(tab: string) {
+    console.log('tab', tab);
+    this.selectedTab = tab;
   }
 }

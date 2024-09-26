@@ -7,16 +7,18 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./action-header.component.css'],
 })
 export class ActionHeaderComponent implements OnInit {
-  selectedTab: string = 'questions';
+  selectedTab: string = 'Questions';
   tabList: string[] = ['Questions', 'Responses', 'Settings'];
 
   @Input() parentForm!: FormGroup;
   @Output() submitFormEvent = new EventEmitter();
+  @Output() tabChangeEvent = new EventEmitter();
   ngOnInit(): void {}
 
   tabChange(event: any) {
     console.log('event', event);
     this.selectedTab = this.tabList[event.index || 0];
+    this.tabChangeEvent.emit(this.selectedTab);
   }
 
   submitForm() {

@@ -226,3 +226,7 @@ div {
 .fg-dark span.mdc-button__label {
   color: var(--dark-color) !important;
 }
+
+.response-analysis .tab-container .mat-mdc-tab-labels {
+  justify-content: space-around;
+}

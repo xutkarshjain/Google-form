@@ -1,9 +1,16 @@
 <div style="background: #f0ebf8; min-height: 100%; padding-bottom: 30px">
   <form [formGroup]="parentForm">
-    <app-action-header [parentForm]="parentForm" (submitFormEvent)="submit()">
+    <app-action-header
+      [parentForm]="parentForm"
+      (submitFormEvent)="submit()"
+      (tabChangeEvent)="tabChange($event)"
+    >
     </app-action-header>
     <div class="body">
-      <div class="form-body">
+      <div
+        [style.display]="selectedTab == 'Questions' ? 'block' : 'none'"
+        class="form-body"
+      >
         <div formArrayName="sections">
           <ng-container
             *ngFor="let section of sections.controls; let i = index"
@@ -17,6 +24,10 @@
           </ng-container>
         </div>
       </div>
+      <app-form-responses
+        *ngIf="selectedTab == 'Responses'"
+      ></app-form-responses>
+      <app-form-settings *ngIf="selectedTab == 'Settings'"></app-form-settings>
     </div>
   </form>
   <ng-container>

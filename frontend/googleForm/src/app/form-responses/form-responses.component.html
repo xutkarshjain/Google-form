@@ -1,0 +1,101 @@
+<div class="body response-analysis">
+  <mat-card class="analysis-header">
+    <mat-card-content class="title-container">
+      <div class="heading">
+        <div>{{ responses.responses.length }} responses</div>
+        <div>
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon class="menu">more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item disabled>
+              <mat-icon>link_off</mat-icon>
+              <span>Unlink form</span>
+            </button>
+            <button mat-menu-item disabled disabled>
+              <mat-icon>print</mat-icon>
+              <span>Print all responses</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item disabled>
+              <mat-icon>delete</mat-icon>
+              <span>Delete all responses</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="sub-heading">
+        <span class="title">Accepting responses</span>
+        <mat-slide-toggle
+          class="example-margin"
+          color="primary"
+          disabled="true"
+          checked="true"
+        ></mat-slide-toggle>
+      </div>
+
+      <div class="tab-container">
+        <mat-tab-group
+          mat-stretch-tabs="false"
+          (selectedTabChange)="tabChange($event)"
+          animationDuration="200ms"
+        >
+          <mat-tab
+            *ngFor="let tab of tabs"
+            label="{{ tab }}"
+            [disabled]="tab != 'Summary'"
+          ></mat-tab>
+        </mat-tab-group>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div *ngFor="let section of formSummary; let sectionIndex = index">
+    <div *ngFor="let question of section.questions; let questionIndex = index">
+      <div
+        *ngIf="sectionIndex != 0 && questionIndex == 0"
+        class="section-header"
+      >
+        {{ section.sectionName }}
+      </div>
+      <mat-card>
+        <mat-card-content style="padding: 12px 12px 24px 24px">
+          <div style="padding: 8px 8px 24px 0px">
+            <div
+              style="font-size: 16px; font-weight: 400"
+              class="question-text"
+            >
+              {{ question.questionText }}
+            </div>
+            <div style="font-size: 12px; font-weight: 400; padding-top: 8px">
+              {{ question.responseCount }} response{{
+                question.responseCount > 1 ? "s" : ""
+              }}
+            </div>
+          </div>
+          <div style="display: block">
+            <div class="chart-container">
+              <div *ngIf="question.responseCount <= 0">
+                No responses yet for this question
+              </div>
+              <canvas
+                [id]="question.selector"
+                style="
+                  width: 600px;
+                  max-width: 600px;
+                  margin-left: auto;
+                  margin-right: auto;
+                "
+                [style.max-height]="question.height || '400px'"
+              ></canvas>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

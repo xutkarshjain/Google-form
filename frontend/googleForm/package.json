@@ -20,6 +20,8 @@
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
+    "chart.js": "^4.4.4",
+    "ng2-charts": "^5.0.4",
     "rxjs": "~7.8.0",
     "sass": "^1.77.8",
     "tslib": "^2.3.0",

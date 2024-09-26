@@ -25,6 +25,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ViewFormComponent } from './view-form/view-form.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormSettingsComponent } from './form-settings/form-settings.component';
+import { FormResponsesComponent } from './form-responses/form-responses.component';
+import { MatCardModule } from '@angular/material/card';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -33,6 +37,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     CreateFormComponent,
     ActionHeaderComponent,
     ViewFormComponent,
+    FormSettingsComponent,
+    FormResponsesComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +61,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatMenuModule,
     MatRadioModule,
     MatCheckboxModule,
+    MatCardModule,
+    NgChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

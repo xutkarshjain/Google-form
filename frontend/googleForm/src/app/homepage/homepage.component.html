@@ -6,11 +6,9 @@
   >
     <mat-icon>menu</mat-icon>
   </button>
-  <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"> -->
   <mat-icon style="font-size: xxx-large; width: auto; height: auto"
     >description</mat-icon
   >
-  <!-- </button> -->
   <span class="product-name">Forms</span>
   <span class="example-spacer"></span>
   <button
@@ -36,18 +34,18 @@
         [cols]="breakpoint"
         rowHeight="150px"
         gutterSize="10px"
-        (window:resize)="onResize($event)"
+        (window:resize)="onResize()"
       >
-        <div *ngFor="let item of items; let i = index">
+        <div *ngFor="let template of templates; let i = index">
           <mat-grid-tile *ngIf="i < breakpoint">
             <div class="grid-item">
               <img
-                (click)="createPrefilledForm(item.formId)"
-                [src]="item.image"
+                (click)="createPrefilledForm(template.formId)"
+                [src]="template.image"
                 alt="Image"
                 class="grid-image"
               />
-              <div class="grid-label">{{ item.label }}</div>
+              <div class="grid-label">{{ template.label }}</div>
             </div>
           </mat-grid-tile>
         </div>
@@ -66,9 +64,9 @@
       "
     ></mat-spinner>
     <table
-      *ngIf="dataSource.length && !loading"
+      *ngIf="formsList.length && !loading"
       mat-table
-      [dataSource]="dataSource"
+      [dataSource]="formsList"
       class="mat-elevation-z8"
     >
       <ng-container matColumnDef="formName">
@@ -122,7 +120,7 @@
         (click)="openRow(row)"
       ></tr>
     </table>
-    <mat-card *ngIf="dataSource.length == 0 && !loading">
+    <mat-card *ngIf="formsList.length == 0 && !loading">
       <mat-card-content class="empty-card">
         <div>No forms yet</div>
         <span>

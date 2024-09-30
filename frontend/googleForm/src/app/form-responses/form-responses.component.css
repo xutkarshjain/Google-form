@@ -3,7 +3,7 @@
 }
 
 mat-card {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .title-container {
@@ -36,36 +36,6 @@ mat-card {
 .chart-container {
   width: 100%;
 }
-
-/* .chart-container .chartjs-render-monitor {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-} */
-
-/* .chart-container .chartjs-legend ul {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.chart-container .chartjs-legend ul li {
-  margin-right: 20px;
-  display: inline-block;
-  width: auto;
-} */
-/*
-.legend-container {
-  max-height: 200px; 
-  overflow-y: auto;
-  width: 100%;
-  padding-right: 10px;
-}
-
-.canvas-container {
-  position: relative;
-}
-*/
 
 .question-text {
   font-size: 16px;

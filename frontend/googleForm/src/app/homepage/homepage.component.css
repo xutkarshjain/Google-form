@@ -30,6 +30,7 @@ mat-toolbar {
 .recent-form-panel {
   max-width: 100%;
   margin: 30px 20%;
+  margin-top: 0px;
 }
 
 .mat-elevation-z8 {
@@ -110,4 +111,14 @@ mat-toolbar {
 .empty-card span {
   color: darkslategray;
   margin-top: 10px;
+}
+
+.no-form-heading {
+  padding-top: 21px;
+  padding-bottom: 19px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  line-height: 24px;
+  color: rgb(32, 33, 36);
 }

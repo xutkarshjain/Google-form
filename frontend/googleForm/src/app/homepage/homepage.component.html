@@ -120,13 +120,17 @@
         (click)="openRow(row)"
       ></tr>
     </table>
-    <mat-card *ngIf="formsList.length == 0 && !loading">
-      <mat-card-content class="empty-card">
-        <div>No forms yet</div>
-        <span>
-          Select a blank form or choose another template above to get started
-        </span>
-      </mat-card-content>
-    </mat-card>
+
+    <div *ngIf="formsList.length == 0 && !loading">
+      <div class="no-form-heading">Recent forms</div>
+      <mat-card>
+        <mat-card-content class="empty-card">
+          <div>No forms yet</div>
+          <span>
+            Select a blank form or choose another template above to get started
+          </span>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 </div>

@@ -8,16 +8,16 @@ export const FORM_TEMPLATES: { [key: string]: Template } = {
     templateId: '1',
   },
   template2: {
-    image: 'assets/images/RSVP.png',
-    label: 'RSVP',
-    formId: '123',
-    templateId: '2',
-  },
-  template3: {
     image: 'assets/images/contact_info.png',
     label: 'Contact Information',
     formId: '123',
     templateId: '3',
+  },
+  template3: {
+    image: 'assets/images/RSVP.png',
+    label: 'RSVP',
+    formId: '123',
+    templateId: '2',
   },
   template4: {
     image: 'assets/images/party_invite.png',

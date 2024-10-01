@@ -13,12 +13,11 @@ export class TemplateService {
     const summaries: Template[] = [];
 
     Object.keys(FORM_TEMPLATES).forEach((templateKey: string) => {
-      const { image, label, formId, templateId } = FORM_TEMPLATES[templateKey];
+      const { image, label, templateId } = FORM_TEMPLATES[templateKey];
 
       const summary: Template = {
         image,
         label,
-        formId,
         templateId,
       };
 

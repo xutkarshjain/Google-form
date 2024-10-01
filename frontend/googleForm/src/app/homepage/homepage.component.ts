@@ -65,11 +65,18 @@ export class HomepageComponent implements OnInit {
 
   openRow(form: formDetails) {
     console.log('click', form);
-    this.router.navigate(['/form', form.formId]);
+    this.router.navigate(['/forms/edit', form.formId]);
   }
 
-  createPrefilledForm(formId: string) {
-    this.router.navigate(['/form', formId]);
+  createFormUsingTemplate(templateId: string) {
+    console.log('templateId', templateId);
+    if (templateId && templateId != '0') {
+      this.router.navigate(['/forms/create'], {
+        queryParams: { templateId: templateId },
+      });
+    } else {
+      this.router.navigate(['/forms/create']);
+    }
   }
 
   updateBreakPoint() {

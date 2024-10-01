@@ -6,10 +6,23 @@ import { ViewFormComponent } from './view-form/view-form.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
-  { path: 'create', component: CreateFormComponent },
-  { path: 'form/:id', component: CreateFormComponent },
-  { path: 'form/:id/viewform', component: ViewFormComponent },
-  { path: '**', component: HomepageComponent },
+  { path: 'forms', component: HomepageComponent },
+  { path: 'forms/create', component: CreateFormComponent },
+  { path: 'forms/edit/:id', component: CreateFormComponent },
+  { path: 'forms/:id/viewform', component: ViewFormComponent },
+  // Wildcard route for additional segments
+  {
+    path: 'forms/create/:extraPath',
+    redirectTo: 'forms/create',
+    pathMatch: 'full',
+  },
+  {
+    path: 'forms/edit/:formId/:extraPath',
+    redirectTo: 'forms/edit/:formId',
+    pathMatch: 'full',
+  },
+
+  { path: '**', redirectTo: '/forms' },
 ];
 
 @NgModule({

@@ -1,0 +1,113 @@
+{
+  "formName": "My form",
+  "formId": null,
+  "sections": [
+    {
+      "id": 1,
+      "name": "section-1",
+      "description": "desc-1",
+      "shuffle": true,
+      "questions": [
+        {
+          "id": 1,
+          "label": "question-1",
+          "type": "Checkboxes",
+          "shuffle": true,
+          "required": true,
+          "options": [
+            { "id": 1, "label": "option-1" },
+            { "id": 2, "label": "option-2" },
+            { "id": 3, "label": "option-3" }
+          ]
+        },
+        {
+          "id": 2,
+          "label": "question-2",
+          "type": "Multiple choice",
+          "shuffle": false,
+          "required": false,
+          "options": [
+            { "id": 1, "label": "option-A" },
+            { "id": 2, "label": "option-B" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "section-2",
+      "description": "desc-2",
+      "shuffle": false,
+      "questions": [
+        {
+          "id": 3,
+          "label": "question-3",
+          "type": "Checkboxes",
+          "shuffle": true,
+          "required": false,
+          "options": [
+            { "id": 1, "label": "option-X" },
+            { "id": 2, "label": "option-Y" },
+            { "id": 3, "label": "option-Z" }
+          ]
+        },
+        {
+          "id": 4,
+          "label": "question-4",
+          "type": "Multiple choice",
+          "shuffle": false,
+          "required": true,
+          "options": [
+            { "id": 1, "label": "option-1" },
+            { "id": 2, "label": "option-2" },
+            { "id": 3, "label": "option-3" },
+            { "id": 4, "label": "option-4" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "section-3",
+      "description": "desc-3",
+      "shuffle": true,
+      "questions": [
+        {
+          "id": 5,
+          "label": "question-5",
+          "type": "Multiple choice",
+          "shuffle": true,
+          "required": true,
+          "options": [
+            { "id": 1, "label": "option-Red" },
+            { "id": 2, "label": "option-Green" },
+            { "id": 3, "label": "option-Blue" }
+          ]
+        },
+        {
+          "id": 6,
+          "label": "question-6",
+          "type": "Checkboxes",
+          "shuffle": false,
+          "required": true,
+          "options": [
+            { "id": 1, "label": "option-Apple" },
+            { "id": 2, "label": "option-Banana" },
+            { "id": 3, "label": "option-Orange" }
+          ]
+        },
+        {
+          "id": 7,
+          "label": "question-7",
+          "type": "Multiple choice",
+          "shuffle": true,
+          "required": false,
+          "options": [
+            { "id": 1, "label": "option-Cat" },
+            { "id": 2, "label": "option-Dog" }
+          ]
+        }
+      ]
+    }
+  ]
+}

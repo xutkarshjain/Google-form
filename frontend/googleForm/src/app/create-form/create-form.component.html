@@ -6,8 +6,19 @@
       (tabChangeEvent)="tabChange($event)"
     >
     </app-action-header>
+
     <div class="body">
+      <mat-spinner
+        *ngIf="loader"
+        style="
+          height: 30px;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 100px;
+        "
+      ></mat-spinner>
       <div
+        *ngIf="!loader"
         [style.display]="selectedTab == 'Questions' ? 'block' : 'none'"
         class="form-body"
       >
@@ -25,7 +36,7 @@
         </div>
       </div>
       <app-form-responses
-        *ngIf="selectedTab == 'Responses'"
+        *ngIf="selectedTab == 'Responses' && !loader"
       ></app-form-responses>
       <app-form-settings *ngIf="selectedTab == 'Settings'"></app-form-settings>
     </div>
@@ -175,7 +186,7 @@
                 <input
                   placeholder="Form title"
                   matInput
-                  formControlName="text"
+                  formControlName="label"
                 />
               </mat-form-field>
             </div>
@@ -362,7 +373,7 @@
       <span style="flex: 1; margin-left: 10px">
         <div class="new-text-like-input option-text">
           <mat-form-field class="example-full-width">
-            <input placeholder="option" matInput formControlName="text" />
+            <input placeholder="option" matInput formControlName="label" />
           </mat-form-field>
         </div>
       </span>

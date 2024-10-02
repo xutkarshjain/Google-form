@@ -1,6 +1,9 @@
-import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { FormsListService } from '../services/forms-service';
+import { type Form } from '../models/form';
+import { TemplateService } from '../services/template.service';
 
 @Component({
   selector: 'app-create-form',
@@ -8,6 +11,11 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
   styleUrls: ['./create-form.component.css'],
 })
 export class CreateFormComponent implements OnInit {
+  formId: string | null = null;
+  templateId: string | null = null;
+  mode: 'create' | 'edit' | 'template' | null = null;
+  formData: any = {};
+  loader: boolean = true;
   selectedItem: any = {
     questionIndex: null,
     sectionIndex: null,
@@ -16,71 +24,22 @@ export class CreateFormComponent implements OnInit {
 
   selectedTab: string = 'Questions';
   defaultData: any = {
-    formName: 'Untitled Form',
+    formName: 'Untitled-form',
     formId: null,
     sections: [
       {
         id: null,
         name: 'Untitled Section',
         description: '',
-        priority: 1,
-        shuffle: false,
-        questions: [
-          {
-            id: null,
-            text: 'Question',
-            type: 'Multiple choice',
-            shuffle: false,
-            required: false,
-            priority: 1,
-            options: [
-              {
-                id: null,
-                text: 'option',
-                priority: 1,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  };
-
-  responseData: any = {
-    formName: 'My form',
-    formId: null,
-    sections: [
-      {
-        id: 1,
-        name: 'section-1',
-        description: 'desc-1',
-        priority: 1,
         shuffle: true,
         questions: [
           {
             id: 1,
-            text: 'question-1',
+            label: 'Question',
             type: 'Checkboxes',
             shuffle: true,
             required: true,
-            priority: 1,
-            options: [
-              {
-                id: 1,
-                text: 'option-1',
-                priority: 1,
-              },
-              {
-                id: 2,
-                text: 'option-2',
-                priority: 2,
-              },
-              {
-                id: 3,
-                text: 'option-3',
-                priority: 3,
-              },
-            ],
+            options: [{ id: 1, label: 'Option 1' }],
           },
         ],
       },
@@ -93,7 +52,12 @@ export class CreateFormComponent implements OnInit {
     { value: 'Checkboxes', viewValue: 'Checkboxes' },
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private FormService: FormsListService,
+    private templateService: TemplateService
+  ) {}
 
   get sections(): FormArray {
     return this.parentForm.get('sections') as FormArray;
@@ -110,47 +74,45 @@ export class CreateFormComponent implements OnInit {
   }
 
   addSection(data?: object) {
-    let formData = data || this.defaultData.sections[0];
+    let formValues = data || this.defaultData.sections[0];
     const section = this.fb.group({
-      id: formData.id || null,
-      name: [formData.name, Validators.required],
-      description: formData.description,
-      priority: formData.priority,
-      shuffle: formData.shuffle,
+      id: formValues.id || null,
+      name: [formValues.name, Validators.required],
+      description: formValues.description,
+      shuffle: formValues.shuffle,
       questions: this.fb.array([]),
     });
     this.sections.push(section);
-    for (let question of formData.questions) {
+    for (let question of formValues.questions) {
       this.addQuestion(this.sections.length - 1, question);
     }
   }
 
   addQuestion(sectionIndex: number, data?: object) {
-    let formData = data || this.defaultData.sections[0].questions[0];
+    let formValues = data || this.defaultData.sections[0].questions[0];
     const question = this.fb.group({
-      id: formData.id,
-      text: [formData.text, Validators.required],
-      type: formData.type,
-      shuffle: formData.shuffle,
-      required: formData.required,
-      priority: formData.priority,
+      id: formValues.id,
+      label: formValues.label,
+      type: formValues.type,
+      shuffle: formValues.shuffle,
+      required: formValues.required,
       options: this.fb.array([]),
     });
 
     this.getQuestions(sectionIndex).push(question);
     let questionIndex: number = this.getQuestions(sectionIndex).length - 1;
-    for (let option of formData.options) {
+    for (let option of formValues.options) {
       this.addOption(sectionIndex, questionIndex, option);
     }
     this.updateSelected(sectionIndex, questionIndex, 'question');
   }
 
   addOption(sectionIndex: number, questionIndex: number, data?: object) {
-    let formData = data || this.defaultData.sections[0].questions[0].options[0];
+    let formValues =
+      data || this.defaultData.sections[0].questions[0].options[0];
     const option = this.fb.group({
-      id: formData.id,
-      text: [formData.id, Validators.required],
-      priority: formData.priority,
+      id: formValues.id,
+      label: [formValues.id, Validators.required],
     });
     this.getOptions(sectionIndex, questionIndex).push(option);
   }
@@ -172,18 +134,76 @@ export class CreateFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('parentForm', this.parentForm);
-    //check whether mode is edit or create
-    // if create, initialise with empty data, else call fetch by Id API
-    let FormData = this.responseData;
+    const path = this.route.snapshot.routeConfig?.path;
+    this.formId = this.route.snapshot.paramMap.get('id');
+    this.templateId = this.route.snapshot.queryParamMap.get('templateId');
 
+    if (path?.startsWith('forms/create')) {
+      this.mode = this.templateId != null ? 'template' : 'create';
+    } else if (path?.startsWith('forms/edit')) {
+      this.mode = 'edit';
+    }
+    console.log('mode', this.mode);
+
+    this.loadFormData();
     this.parentForm = this.fb.group({
-      formName: [FormData.formName, Validators.required],
-      formId: FormData.formId,
+      formName: [this.defaultData.formName, Validators.required],
+      formId: this.defaultData.formId,
       sections: this.fb.array([]),
     });
-    for (let section of FormData.sections) {
+  }
+
+  initializeForm() {
+    this.parentForm = this.fb.group({
+      formName: [this.formData.formName, Validators.required],
+      formId: this.formData.formId,
+      sections: this.fb.array([]),
+    });
+    for (let section of this.formData.sections) {
       this.addSection(section);
+    }
+  }
+
+  loadFormData() {
+    if (this.mode === 'edit' && this.formId) {
+      // Load data for editing the form with formId
+      this.FormService.getFormByFormId(this.formId).subscribe(
+        (formResponse: Form) => {
+          this.formData = formResponse;
+          this.initializeForm();
+          this.updateSelected(0, 0, 'question');
+          this.loader = false;
+        },
+        (error) => {
+          console.error('Error occurred while fetching form:', error);
+          // redirect to 404 page
+        }
+      );
+    } else if (this.mode === 'template' && this.templateId) {
+      // Load data for creating form using template
+      this.templateService.getTemplateById(this.templateId).subscribe(
+        (templateResponse: any) => {
+          this.formData = templateResponse.details;
+          this.initializeForm();
+          this.updateSelected(0, 0, 'question');
+
+          this.loader = false;
+        },
+        (error) => {
+          // Handle error
+          console.error('No Such Template:', error);
+          this.mode = 'create';
+          this.templateId = null;
+          this.loadFormData();
+          // redirect to 404 page
+        }
+      );
+    } else {
+      this.templateService.getDefaultFormData().subscribe((data: Form) => {
+        this.formData = data;
+        this.initializeForm();
+        this.loader = false;
+      });
     }
   }
 
@@ -191,7 +211,6 @@ export class CreateFormComponent implements OnInit {
     this.selectedItem.sectionIndex = sectionIndex;
     this.selectedItem.questionIndex = questionIndex;
     this.selectedItem.type = type;
-    console.log('updateSelected', this.selectedItem);
   }
 
   getIconForQuestionType(type: string, filled: boolean) {

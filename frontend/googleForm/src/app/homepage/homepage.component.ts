@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { FormsListService } from '../services/forms-service';
 import { TemplateService } from '../services/template.service';
-import { type Form } from '../models/form';
+import { type FormDetails } from '../models/form-detail';
 import { type User } from '../models/user';
 import { type Template } from '../models/template';
 
@@ -30,7 +30,7 @@ export class HomepageComponent implements OnInit {
   ];
 
   loggedInUser!: string;
-  formsList: Form[] = [];
+  formsList: FormDetails[] = [];
   templates: Template[] = [];
 
   constructor(
@@ -52,7 +52,7 @@ export class HomepageComponent implements OnInit {
       this.loggedInUser = userResponse.id;
       this.formsService
         .getFormsByUserId(this.loggedInUser)
-        .subscribe((fomsListResponse: Form[]) => {
+        .subscribe((fomsListResponse: FormDetails[]) => {
           this.formsList = fomsListResponse;
           this.loading = false;
         });

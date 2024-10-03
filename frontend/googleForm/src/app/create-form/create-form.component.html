@@ -37,6 +37,7 @@
       </div>
       <app-form-responses
         *ngIf="selectedTab == 'Responses' && !loader"
+        [formData]="formData"
       ></app-form-responses>
       <app-form-settings *ngIf="selectedTab == 'Settings'"></app-form-settings>
     </div>

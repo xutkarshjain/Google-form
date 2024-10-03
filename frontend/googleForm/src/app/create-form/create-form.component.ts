@@ -24,7 +24,7 @@ export class CreateFormComponent implements OnInit {
 
   selectedTab: string = 'Questions';
   defaultData: any = {
-    formName: 'Untitled-form',
+    formName: 'Untitled form',
     formId: null,
     sections: [
       {

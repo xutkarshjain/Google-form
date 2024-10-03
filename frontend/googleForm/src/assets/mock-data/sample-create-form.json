@@ -1,34 +1,69 @@
 {
   "formName": "My form",
-  "formId": null,
+  "formId": "123",
   "sections": [
     {
       "id": 1,
-      "name": "section-1",
-      "description": "desc-1",
+      "name": "Untitled Section",
+      "description": "Section 1 description",
       "shuffle": true,
       "questions": [
         {
           "id": 1,
-          "label": "question-1",
+          "label": "What is your favorite color?",
           "type": "Checkboxes",
           "shuffle": true,
           "required": true,
           "options": [
-            { "id": 1, "label": "option-1" },
-            { "id": 2, "label": "option-2" },
-            { "id": 3, "label": "option-3" }
+            { "id": 1, "label": "Red" },
+            { "id": 2, "label": "Blue" }
+          ]
+        },
+        {
+          "id": 90,
+          "label": "What is your least favorite color?",
+          "type": "Multiple choice",
+          "shuffle": true,
+          "required": true,
+          "options": [
+            { "id": 1, "label": "Red" },
+            { "id": 2, "label": "Blue" }
           ]
         },
         {
           "id": 2,
-          "label": "question-2",
+          "label": "What type of movies do you like?",
           "type": "Multiple choice",
           "shuffle": false,
+          "required": true,
+          "options": [
+            { "id": 1, "label": "Action" },
+            { "id": 2, "label": "Comedy" },
+            { "id": 3, "label": "Drama" }
+          ]
+        },
+        {
+          "id": 3,
+          "label": "What pets do you have?",
+          "type": "Checkboxes",
+          "shuffle": true,
           "required": false,
           "options": [
-            { "id": 1, "label": "option-A" },
-            { "id": 2, "label": "option-B" }
+            { "id": 1, "label": "Dog" },
+            { "id": 2, "label": "Cat" },
+            { "id": 3, "label": "Bird" },
+            { "id": 4, "label": "Fish" }
+          ]
+        },
+        {
+          "id": 4,
+          "label": "Do you prefer tea or coffee?",
+          "type": "Multiple choice",
+          "shuffle": false,
+          "required": true,
+          "options": [
+            { "id": 1, "label": "Tea" },
+            { "id": 2, "label": "Coffee" }
           ]
         }
       ]
@@ -36,32 +71,57 @@
     {
       "id": 2,
       "name": "section-2",
-      "description": "desc-2",
+      "description": "Section 2 description",
       "shuffle": false,
       "questions": [
         {
-          "id": 3,
-          "label": "question-3",
+          "id": 5,
+          "label": "Which fruits do you like?",
+          "type": "Checkboxes",
+          "shuffle": false,
+          "required": false,
+          "options": [
+            { "id": 1, "label": "Apple" },
+            { "id": 2, "label": "Banana" },
+            { "id": 3, "label": "Orange" }
+          ]
+        },
+        {
+          "id": 6,
+          "label": "What is your favorite season?",
+          "type": "Multiple choice",
+          "shuffle": true,
+          "required": true,
+          "options": [
+            { "id": 1, "label": "Spring" },
+            { "id": 2, "label": "Summer" },
+            { "id": 3, "label": "Fall" },
+            { "id": 4, "label": "Winter" }
+          ]
+        },
+        {
+          "id": 7,
+          "label": "Which outdoor activities do you enjoy?",
           "type": "Checkboxes",
           "shuffle": true,
           "required": false,
           "options": [
-            { "id": 1, "label": "option-X" },
-            { "id": 2, "label": "option-Y" },
-            { "id": 3, "label": "option-Z" }
+            { "id": 1, "label": "Hiking" },
+            { "id": 2, "label": "Cycling" },
+            { "id": 3, "label": "Running" },
+            { "id": 4, "label": "Camping" }
           ]
         },
         {
-          "id": 4,
-          "label": "question-4",
+          "id": 8,
+          "label": "What is your preferred workout time?",
           "type": "Multiple choice",
           "shuffle": false,
           "required": true,
           "options": [
-            { "id": 1, "label": "option-1" },
-            { "id": 2, "label": "option-2" },
-            { "id": 3, "label": "option-3" },
-            { "id": 4, "label": "option-4" }
+            { "id": 1, "label": "Morning" },
+            { "id": 2, "label": "Afternoon" },
+            { "id": 3, "label": "Evening" }
           ]
         }
       ]
@@ -69,42 +129,203 @@
     {
       "id": 3,
       "name": "section-3",
-      "description": "desc-3",
+      "description": "Section 3 description",
       "shuffle": true,
       "questions": [
         {
-          "id": 5,
-          "label": "question-5",
-          "type": "Multiple choice",
-          "shuffle": true,
-          "required": true,
-          "options": [
-            { "id": 1, "label": "option-Red" },
-            { "id": 2, "label": "option-Green" },
-            { "id": 3, "label": "option-Blue" }
-          ]
-        },
-        {
-          "id": 6,
-          "label": "question-6",
+          "id": 9,
+          "label": "Select the hobbies you enjoy",
           "type": "Checkboxes",
-          "shuffle": false,
-          "required": true,
-          "options": [
-            { "id": 1, "label": "option-Apple" },
-            { "id": 2, "label": "option-Banana" },
-            { "id": 3, "label": "option-Orange" }
-          ]
-        },
-        {
-          "id": 7,
-          "label": "question-7",
-          "type": "Multiple choice",
           "shuffle": true,
           "required": false,
           "options": [
-            { "id": 1, "label": "option-Cat" },
-            { "id": 2, "label": "option-Dog" }
+            { "id": 1, "label": "Reading" },
+            { "id": 2, "label": "Traveling" },
+            { "id": 3, "label": "Cooking" },
+            { "id": 4, "label": "Sports" }
+          ]
+        },
+        {
+          "id": 10,
+          "label": "What kind of music do you prefer?",
+          "type": "Multiple choice",
+          "shuffle": false,
+          "required": true,
+          "options": [
+            { "id": 1, "label": "Rock" },
+            { "id": 2, "label": "Pop" },
+            { "id": 3, "label": "Jazz" },
+            { "id": 4, "label": "Classical" }
+          ]
+        },
+        {
+          "id": 11,
+          "label": "What do you use for reading?",
+          "type": "Checkboxes",
+          "shuffle": true,
+          "required": false,
+          "options": [
+            { "id": 1, "label": "Books" },
+            { "id": 2, "label": "E-Books" },
+            { "id": 3, "label": "Magazines" }
+          ]
+        },
+        {
+          "id": 12,
+          "label": "Which type of vacation do you prefer?",
+          "type": "Multiple choice",
+          "shuffle": true,
+          "required": true,
+          "options": [
+            { "id": 1, "label": "Beach" },
+            { "id": 2, "label": "Mountain" },
+            { "id": 3, "label": "City" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "section-4",
+      "description": "Section 4 description",
+      "shuffle": false,
+      "questions": [
+        {
+          "id": 13,
+          "label": "Which type of cuisine do you prefer?",
+          "type": "Multiple choice",
+          "shuffle": false,
+          "required": true,
+          "options": [
+            { "id": 1, "label": "Italian" },
+            { "id": 2, "label": "Chinese" },
+            { "id": 3, "label": "Mexican" },
+            { "id": 4, "label": "Indian" }
+          ]
+        },
+        {
+          "id": 14,
+          "label": "What do you usually order for takeout?",
+          "type": "Checkboxes",
+          "shuffle": true,
+          "required": false,
+          "options": [
+            { "id": 1, "label": "Pizza" },
+            { "id": 2, "label": "Burgers" },
+            { "id": 3, "label": "Sushi" },
+            { "id": 4, "label": "Pasta" }
+          ]
+        },
+        {
+          "id": 15,
+          "label": "Which drinks do you enjoy?",
+          "type": "Checkboxes",
+          "shuffle": true,
+          "required": false,
+          "options": [
+            { "id": 1, "label": "Water" },
+            { "id": 2, "label": "Juice" },
+            { "id": 3, "label": "Soda" },
+            { "id": 4, "label": "Coffee" }
+          ]
+        },
+        {
+          "id": 16,
+          "label": "Which dessert do you prefer?",
+          "type": "Multiple choice",
+          "shuffle": true,
+          "required": true,
+          "options": [
+            { "id": 1, "label": "Ice Cream" },
+            { "id": 2, "label": "Cake" },
+            { "id": 3, "label": "Pie" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "section-5",
+      "description": "Section 5 description",
+      "shuffle": true,
+      "questions": [
+        {
+          "id": 17,
+          "label": "Which books do you like to read?",
+          "type": "Checkboxes",
+          "shuffle": true,
+          "required": false,
+          "options": [
+            { "id": 1, "label": "Fiction" },
+            { "id": 2, "label": "Non-fiction" },
+            { "id": 3, "label": "Biography" },
+            { "id": 4, "label": "Mystery" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Travel Preferences",
+      "description": "A section about your travel choices",
+      "shuffle": true,
+      "questions": [
+        {
+          "id": 1,
+          "label": "Which places have you visited?",
+          "type": "Checkboxes",
+          "shuffle": true,
+          "required": false,
+          "options": [
+            { "id": 1, "label": "Europe" },
+            { "id": 2, "label": "Asia" },
+            { "id": 3, "label": "North America" },
+            { "id": 4, "label": "South America" }
+          ]
+        },
+        {
+          "id": 2,
+          "label": "What type of vacation do you prefer?",
+          "type": "Multiple choice",
+          "shuffle": false,
+          "required": true,
+          "options": [
+            { "id": 1, "label": "Adventure" },
+            { "id": 2, "label": "Relaxation" },
+            { "id": 3, "label": "Cultural" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Food Preferences",
+      "description": "A section about your food choices",
+      "shuffle": true,
+      "questions": [
+        {
+          "id": 1,
+          "label": "What cuisines do you enjoy?",
+          "type": "Checkboxes",
+          "shuffle": true,
+          "required": false,
+          "options": [
+            { "id": 1, "label": "Italian" },
+            { "id": 2, "label": "Mexican" },
+            { "id": 3, "label": "Indian" },
+            { "id": 4, "label": "Thai" }
+          ]
+        },
+        {
+          "id": 2,
+          "label": "What is your favorite dessert?",
+          "type": "Multiple choice",
+          "shuffle": false,
+          "required": true,
+          "options": [
+            { "id": 1, "label": "Chocolate Cake" },
+            { "id": 2, "label": "Ice Cream" },
+            { "id": 3, "label": "Pudding" }
           ]
         }
       ]

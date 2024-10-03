@@ -1,8 +1,10 @@
 <div class="body response-analysis">
-  <mat-card class="analysis-header">
+  <mat-card class="analysis-header" *ngIf="!loader">
     <mat-card-content class="title-container">
       <div class="heading">
-        <div>{{ responses.responses.length }} responses</div>
+        <div>
+          {{ responses.responses ? responses.responses.length : 0 }} responses
+        </div>
         <div>
           <button
             mat-icon-button
@@ -38,7 +40,7 @@
         ></mat-slide-toggle>
       </div>
 
-      <div class="tab-container">
+      <div class="tab-container" *ngIf="this.formData.formId != null">
         <mat-tab-group
           mat-stretch-tabs="false"
           (selectedTabChange)="tabChange($event)"
@@ -51,6 +53,12 @@
           ></mat-tab>
         </mat-tab-group>
       </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="this.formData.formId == null">
+    <mat-card-content style="text-align: center; font-size: small; color: gray"
+      >Waiting for responses
     </mat-card-content>
   </mat-card>
 

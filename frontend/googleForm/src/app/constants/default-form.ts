@@ -1,7 +1,7 @@
 import { Form } from '../models/form';
 export const defaultData: Form = {
   formId: null,
-  formName: 'Untitled-form',
+  formName: 'Untitled form',
   sections: [
     {
       id: null,

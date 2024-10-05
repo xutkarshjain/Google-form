@@ -24,4 +24,16 @@ export class ActionHeaderComponent implements OnInit {
   submitForm() {
     this.submitFormEvent.emit();
   }
+
+  onFormNameBlur() {
+    setTimeout(() => {
+      if (
+        this.parentForm.value['formName'].trim() == '' ||
+        this.parentForm.value['formName'] == null ||
+        this.parentForm.value['formName'] == undefined
+      ) {
+        this.parentForm.controls['formName'].patchValue('Untitle form');
+      }
+    }, 1);
+  }
 }

@@ -378,7 +378,12 @@
       <span style="flex: 1; margin-left: 10px">
         <div class="new-text-like-input option-text">
           <mat-form-field class="example-full-width">
-            <input placeholder="option" matInput formControlName="label" />
+            <input
+              placeholder="option"
+              matInput
+              formControlName="label"
+              (blur)="onOptionBlur(sectionIndex, questionIndex, optionIndex)"
+            />
           </mat-form-field>
         </div>
       </span>

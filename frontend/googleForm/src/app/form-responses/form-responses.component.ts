@@ -223,7 +223,7 @@ export class FormResponsesComponent
   ngAfterViewInit() {
     setTimeout(() => {
       this.createCharts();
-    }, 500);
+    }, 1500);
   }
 
   tabChange(tab: MatTabChangeEvent) {

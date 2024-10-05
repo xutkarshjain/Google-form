@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormArray,
+  AbstractControl,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FormsListService } from '../services/forms-service';
 import { type Form } from '../models/form';
@@ -31,15 +37,15 @@ export class CreateFormComponent implements OnInit {
         id: null,
         name: 'Untitled Section',
         description: '',
-        shuffle: true,
+        shuffle: false,
         questions: [
           {
-            id: 1,
+            id: null,
             label: 'Question',
             type: 'Checkboxes',
-            shuffle: true,
-            required: true,
-            options: [{ id: 1, label: 'Option 1' }],
+            shuffle: false,
+            required: false,
+            options: [{ id: null, label: 'Option' }],
           },
         ],
       },
@@ -112,7 +118,7 @@ export class CreateFormComponent implements OnInit {
       data || this.defaultData.sections[0].questions[0].options[0];
     const option = this.fb.group({
       id: formValues.id,
-      label: [formValues.id, Validators.required],
+      label: [formValues.label, Validators.required],
     });
     this.getOptions(sectionIndex, questionIndex).push(option);
   }
@@ -143,7 +149,6 @@ export class CreateFormComponent implements OnInit {
     } else if (path?.startsWith('forms/edit')) {
       this.mode = 'edit';
     }
-    console.log('mode', this.mode);
 
     this.loadFormData();
     this.parentForm = this.fb.group({
@@ -162,6 +167,7 @@ export class CreateFormComponent implements OnInit {
     for (let section of this.formData.sections) {
       this.addSection(section);
     }
+    this.scrollToElement(0);
   }
 
   loadFormData() {
@@ -226,6 +232,7 @@ export class CreateFormComponent implements OnInit {
   }
 
   submit() {
+    console.log('submit', this.parentForm);
     //validate request and call save API
   }
 
@@ -310,5 +317,20 @@ export class CreateFormComponent implements OnInit {
       const element = document.getElementById(target);
       element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
+  }
+
+  onOptionBlur(
+    sectionIndex: number,
+    questionIndex: number,
+    optionIndex: number
+  ) {
+    let option: AbstractControl = this.getOptions(
+      sectionIndex,
+      questionIndex
+    ).at(optionIndex);
+
+    if (!option.value.label || option.value.label.trim() == '') {
+      option.patchValue({ id: option.value.id, label: 'Option' });
+    }
   }
 }

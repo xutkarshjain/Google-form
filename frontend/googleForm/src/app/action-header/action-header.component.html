@@ -6,7 +6,11 @@
     <form [formGroup]="parentForm">
       <span class="gray-text text-like-input">
         <mat-form-field class="example-full-width">
-          <input matInput formControlName="formName" />
+          <input
+            matInput
+            formControlName="formName"
+            (blur)="onFormNameBlur()"
+          />
         </mat-form-field>
       </span>
     </form>

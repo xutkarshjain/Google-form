@@ -58,6 +58,7 @@
       <div
         (click)="updateSelected(sectionIndex, -1, 'section')"
         class="header selectable"
+        [id]="'section_' + sectionIndex"
         [ngClass]="{
           selected: isSelected(sectionIndex, -1, 'section'),
           multi_section: sections.length > 1
@@ -157,7 +158,10 @@
   let-sectionIndex="sectionIndex"
   let-questionIndex="questionIndex"
 >
-  <div class="questions">
+  <div
+    class="questions"
+    [id]="'section_' + sectionIndex + '_question_' + questionIndex"
+  >
     <div [formGroup]="question">
       <div
         (click)="updateSelected(sectionIndex, questionIndex, 'question')"

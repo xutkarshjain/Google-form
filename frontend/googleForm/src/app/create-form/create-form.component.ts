@@ -249,11 +249,16 @@ export class CreateFormComponent implements OnInit {
   addQuestionWrapper(event: any, data?: object) {
     event.stopPropagation();
     this.addQuestion(this.selectedItem.sectionIndex, data);
+    this.scrollToElement(
+      this.selectedItem.sectionIndex,
+      this.getQuestions(this.selectedItem.sectionIndex).length - 1
+    );
   }
 
   addSectionWrapper(event: any, data?: object) {
     event.stopPropagation();
     this.addSection(data);
+    this.scrollToElement(this.sections.length - 1);
   }
 
   removeSectionWrapper(event: any) {
@@ -292,5 +297,18 @@ export class CreateFormComponent implements OnInit {
   tabChange(tab: string) {
     console.log('tab', tab);
     this.selectedTab = tab;
+  }
+
+  scrollToElement(sectionIndex?: number, questionIndex?: number) {
+    let target = '';
+    if (questionIndex) {
+      target = `section_${sectionIndex}_question_${questionIndex}`;
+    } else if (sectionIndex != null && sectionIndex != undefined) {
+      target = `section_${sectionIndex}`;
+    }
+    setTimeout(() => {
+      const element = document.getElementById(target);
+      element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
   }
 }

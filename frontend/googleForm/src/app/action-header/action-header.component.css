@@ -46,3 +46,7 @@ mat-form-field input {
 mat-form-field {
   width: 120px;
 }
+
+.disabled {
+  cursor: not-allowed;
+}

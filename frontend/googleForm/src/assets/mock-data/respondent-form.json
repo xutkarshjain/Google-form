@@ -1,0 +1,107 @@
+{
+  "formId": "123",
+  "formName": "test name",
+  "sections": [
+    {
+      "id": 1,
+      "name": "section-1",
+      "description": "desc-1",
+      "questions": [
+        {
+          "id": 1,
+          "label": "question-1",
+          "type": "mcq",
+          "required": true,
+          "options": [
+            {
+              "id": 1,
+              "label": "option-1"
+            },
+            {
+              "id": 2,
+              "label": "option-2"
+            },
+            {
+              "id": 3,
+              "label": "option-3"
+            }
+          ]
+        },
+        {
+          "id": 1,
+          "label": "question-2",
+          "type": "Checkboxes",
+          "required": false,
+          "options": [
+            {
+              "id": 1,
+              "label": "option-1"
+            },
+            {
+              "id": 2,
+              "label": "option-2"
+            },
+            {
+              "id": 3,
+              "label": "option-3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "section-2",
+      "description": "",
+      "questions": [
+        {
+          "id": 1,
+          "label": "question-1",
+          "type": "Checkboxes",
+          "required": true,
+          "options": [
+            {
+              "id": 1,
+              "label": "option-1"
+            },
+            {
+              "id": 2,
+              "label": "option-2"
+            },
+            {
+              "id": 3,
+              "label": "option-3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "section-3",
+      "description": "desc-3",
+      "questions": [
+        {
+          "id": 1,
+          "label": "question-1",
+          "type": "Checkboxes",
+          "required": true,
+          "options": [
+            {
+              "id": 1,
+              "label": "option-1"
+            },
+            {
+              "id": 2,
+              "label": "option-2"
+            },
+            {
+              "id": 3,
+              "label": "option-3"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

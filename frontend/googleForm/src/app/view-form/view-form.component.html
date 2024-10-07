@@ -1,6 +1,16 @@
 <div class="body">
   <div class="container">
-    <form [formGroup]="viewForm">
+    <mat-spinner
+      *ngIf="loader"
+      style="
+        height: 30px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 100px;
+      "
+    ></mat-spinner>
+
+    <form *ngIf="!loader" [formGroup]="viewForm">
       <ng-container
         *ngTemplateOutlet="
           formheader;
@@ -67,7 +77,7 @@
     <div formArrayName="questions">
       <ng-container
         *ngFor="
-          let question of getQuestion(sectionIndex).controls;
+          let question of getQuestions(sectionIndex).controls;
           let questionIndex = index
         "
       >
@@ -97,7 +107,7 @@
   <div [formGroup]="question">
     <div class="question mcq card px24">
       <div class="question-text">
-        {{ questionData.text }}
+        {{ questionData.label }}
 
         <span *ngIf="questionData.required" class="required">*</span>
       </div>
@@ -122,7 +132,7 @@
                       *ngFor="let option of questionData.options"
                       [value]="option.id"
                     >
-                      {{ option.text }}
+                      {{ option.label }}
                     </mat-radio-button>
                   </mat-radio-group>
                 </div>
@@ -146,7 +156,7 @@
                     )
                   "
                 >
-                  {{ option.text }}
+                  {{ option.label }}
                 </mat-checkbox>
               </div>
             </div>
@@ -163,7 +173,7 @@
       class="example-margin"
       color="primary"
       *ngFor="let option of options"
-      >{{ option.text }}</mat-checkbox
+      >{{ option.label }}</mat-checkbox
     >
   </div>
 </ng-template>

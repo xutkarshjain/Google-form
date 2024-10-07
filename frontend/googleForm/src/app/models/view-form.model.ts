@@ -1,11 +1,11 @@
 export interface option {
   id: number;
-  text: string;
+  label: string;
 }
 
 export interface question {
   id: number;
-  text: string;
+  label: string;
   type: string;
   required: boolean;
   options: option[];
@@ -19,6 +19,7 @@ export interface section {
 }
 
 export interface form {
-  id: number;
+  formId: string;
+  formName: string;
   sections: section[];
 }

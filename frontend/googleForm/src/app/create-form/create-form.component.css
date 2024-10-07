@@ -7,7 +7,8 @@
   padding-top: 113px;
   height: calc(100% - 113px);
   background: var(--light-color);
-  width: 770px;
+  max-width: 770px;
+  min-width: 350px;
   margin: auto;
 }
 
@@ -271,6 +272,8 @@ button.pressed {
   background: white;
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border: 1px solid rgb(218, 220, 224);
+  border-bottom: 0;
 }
 
 .section-name-and-options {

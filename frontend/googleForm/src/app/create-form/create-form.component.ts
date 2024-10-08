@@ -88,6 +88,9 @@ export class CreateFormComponent implements OnInit {
       shuffle: formValues.shuffle,
       questions: this.fb.array([]),
     });
+    if (!formValues.id && this.sections.length == 0) {
+      section.controls.name.patchValue(this.parentForm.value.formName);
+    }
     this.sections.push(section);
     for (let question of formValues.questions) {
       this.addQuestion(this.sections.length - 1, question);
@@ -332,5 +335,22 @@ export class CreateFormComponent implements OnInit {
     if (!option.value.label || option.value.label.trim() == '') {
       option.patchValue({ id: option.value.id, label: 'Option' });
     }
+  }
+
+  onSectionNameBlur(sectionIndex: number) {
+    setTimeout(() => {
+      let section = this.sections.at(sectionIndex);
+      if (
+        section.value.name == null ||
+        section.value.name == undefined ||
+        section.value.name.trim() == ''
+      )
+        section.patchValue({
+          name:
+            sectionIndex == 0
+              ? this.parentForm.value.formName
+              : 'Untitled section',
+        });
+    }, 0);
   }
 }

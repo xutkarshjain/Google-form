@@ -82,9 +82,12 @@
             <div class="new-text-like-input section-title">
               <mat-form-field class="example-full-width">
                 <input
-                  placeholder="Form title"
+                  [placeholder]="
+                    sectionIndex == 0 ? 'Form title' : 'Section title'
+                  "
                   matInput
                   formControlName="name"
+                  (blur)="onSectionNameBlur(sectionIndex)"
                 />
               </mat-form-field>
             </div>
@@ -114,7 +117,9 @@
           <div class="new-text-like-input">
             <mat-form-field class="example-full-width">
               <input
-                placeholder="Form description"
+                [placeholder]="
+                  sectionIndex == 0 ? 'Form description' : 'Section description'
+                "
                 matInput
                 formControlName="description"
               />
@@ -189,7 +194,7 @@
             <div style="width: 100%">
               <mat-form-field class="" style="width: 100%">
                 <input
-                  placeholder="Form title"
+                  placeholder="Question"
                   matInput
                   formControlName="label"
                 />
@@ -379,7 +384,7 @@
         <div class="new-text-like-input option-text">
           <mat-form-field class="example-full-width">
             <input
-              placeholder="option"
+              placeholder="Option"
               matInput
               formControlName="label"
               (blur)="onOptionBlur(sectionIndex, questionIndex, optionIndex)"

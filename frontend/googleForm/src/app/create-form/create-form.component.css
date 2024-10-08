@@ -181,6 +181,7 @@ button.pressed {
   font-family: Roboto, Arial, sans-serif;
   font-size: 14px;
   font-weight: 500;
+  cursor: pointer;
   letter-spacing: 0.2px;
   line-height: 20px;
   margin-left: 10px;

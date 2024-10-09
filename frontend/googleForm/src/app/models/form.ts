@@ -25,3 +25,7 @@ export interface Form {
   formName: string;
   sections: section[];
 }
+
+export interface SaveFormResponse {
+  formId: string;
+}

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { DialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-action-header',
@@ -11,9 +13,12 @@ export class ActionHeaderComponent implements OnInit {
   tabList: string[] = ['Questions', 'Responses', 'Settings'];
 
   @Input() parentForm!: FormGroup;
-  @Output() submitFormEvent = new EventEmitter();
+  @Output() submitFormAndShowUrlEvent = new EventEmitter();
   @Output() tabChangeEvent = new EventEmitter();
+  @Output() saveAndOpenPreviewEvent = new EventEmitter();
   ngOnInit(): void {}
+
+  constructor(private router: Router, private dialogService: DialogService) {}
 
   tabChange(event: any) {
     console.log('event', event);
@@ -21,8 +26,8 @@ export class ActionHeaderComponent implements OnInit {
     this.tabChangeEvent.emit(this.selectedTab);
   }
 
-  submitForm() {
-    this.submitFormEvent.emit();
+  submitFormAndShowUrl() {
+    this.submitFormAndShowUrlEvent.emit();
   }
 
   onFormNameBlur() {
@@ -35,5 +40,35 @@ export class ActionHeaderComponent implements OnInit {
         this.parentForm.controls['formName'].patchValue('Untitle form');
       }
     }, 1);
+  }
+
+  goToHomePage() {
+    this.router.navigate(['/forms']);
+  }
+
+  onPreview() {
+    if (this.parentForm.value.formId && this.parentForm.pristine) {
+      this.openPreviewInNewTab(this.parentForm.value.formId);
+    } else {
+      this.openConfirmDialog();
+    }
+  }
+
+  openPreviewInNewTab(formId: string) {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['/forms', formId, 'viewform'])
+    );
+    window.open(url, '_blank');
+  }
+
+  async openConfirmDialog() {
+    const confirmed = await this.dialogService.confirm(
+      'Preview',
+      'You have some unsaved changes, wanna save first?'
+    );
+    if (confirmed) {
+      this.saveAndOpenPreviewEvent.emit();
+    } else {
+    }
   }
 }

@@ -2,8 +2,9 @@
   <form [formGroup]="parentForm">
     <app-action-header
       [parentForm]="parentForm"
-      (submitFormEvent)="submit()"
+      (submitFormAndShowUrlEvent)="submitAndShowURL()"
       (tabChangeEvent)="tabChange($event)"
+      (saveAndOpenPreviewEvent)="saveAndOpenPreview()"
     >
     </app-action-header>
 

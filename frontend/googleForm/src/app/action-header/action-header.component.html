@@ -1,6 +1,8 @@
 <div class="header">
   <mat-toolbar>
-    <mat-icon style="font-size: xxx-large; width: auto; height: auto"
+    <mat-icon
+      style="font-size: xxx-large; width: auto; height: auto; cursor: pointer"
+      (click)="goToHomePage()"
       >description</mat-icon
     >
     <form [formGroup]="parentForm">
@@ -42,6 +44,7 @@
       class="example-icon favorite-icon gray-text"
       aria-label="Example icon-button with heart icon"
       matTooltip="Preview"
+      (click)="onPreview()"
     >
       <mat-icon
         class="material-icons-outlined"
@@ -69,7 +72,7 @@
         >redo</mat-icon
       >
     </button>
-    <button mat-raised-button color="primary" (click)="submitForm()">
+    <button mat-raised-button color="primary" (click)="submitFormAndShowUrl()">
       Save
     </button>
 

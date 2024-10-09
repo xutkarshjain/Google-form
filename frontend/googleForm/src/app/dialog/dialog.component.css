@@ -1,0 +1,7 @@
+.action-buttons {
+  float: right;
+}
+
+mat-dialog-actions {
+  padding-right: 24px;
+}

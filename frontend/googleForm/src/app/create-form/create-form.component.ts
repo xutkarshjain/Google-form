@@ -8,8 +8,9 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FormsListService } from '../services/forms-service';
-import { type Form } from '../models/form';
+import { SaveFormResponse, type Form } from '../models/form';
 import { TemplateService } from '../services/template.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-form',
@@ -62,7 +63,8 @@ export class CreateFormComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private FormService: FormsListService,
-    private templateService: TemplateService
+    private templateService: TemplateService,
+    private router: Router
   ) {}
 
   get sections(): FormArray {
@@ -234,9 +236,68 @@ export class CreateFormComponent implements OnInit {
     }
   }
 
-  submit() {
-    console.log('submit', this.parentForm);
-    //validate request and call save API
+  submit(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.FormService.saveForm(this.parentForm).subscribe(
+        (saveResponse: SaveFormResponse) => {
+          // re-render the form
+          resolve(saveResponse);
+        },
+        (error: any) => {
+          reject(null);
+        }
+      );
+    });
+  }
+
+  isFormValid(): boolean {
+    // validate the form
+    return true;
+  }
+
+  submitAndShowURL() {
+    if (!this.isFormValid()) {
+      // show validation error
+      return;
+    }
+    this.submit()
+      .then(() => {
+        this.showPreviewURL();
+      })
+      .catch((error: any) => {
+        this.showToast();
+      });
+  }
+
+  saveAndOpenPreview() {
+    if (!this.isFormValid()) {
+      // show validation error
+      return;
+    }
+    this.submit()
+      .then((formResponse: SaveFormResponse) => {
+        this.openPreviewInNewTab(formResponse.formId);
+      })
+      .catch((error: any) => {
+        this.showToast();
+      }); // .then open preview in new tab
+  }
+
+  openPreviewInNewTab(formId: string) {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['/forms', formId, 'viewform'])
+    );
+    window.open(url, '_blank');
+  }
+
+  showPreviewURL() {
+    // show previewURL
+    console.log('showPreviewURL');
+  }
+
+  showToast() {
+    // show toast
+    console.log('show toast');
   }
 
   toggleShuffle(sectionIndex: number, questionIndex: number) {

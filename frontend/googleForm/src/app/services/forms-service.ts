@@ -13,7 +13,9 @@ export class FormsListService {
   constructor(private http: HttpClient) {}
 
   getFormsByUserId(userId: string): Observable<FormDetails[]> {
-    return this.http.get<FormDetails[]>(`${API_URLS.FETCH_ALL_FORMS}`);
+    return this.http
+      .get<FormDetails[]>(`${API_URLS.FETCH_ALL_FORMS}`)
+      .pipe(delay(1000));
     // return this.http.get<Form[]>(`${API_URLS.FETCH_ALL_FORMS}/${userId}`);
   }
 

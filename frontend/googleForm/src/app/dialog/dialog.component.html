@@ -1,12 +1,72 @@
-<h2 mat-dialog-title>{{ title }}</h2>
-<mat-dialog-content>
-  <p>{{ message }}</p>
-</mat-dialog-content>
-<div class="action-buttons">
-  <mat-dialog-actions>
-    <button mat-button (click)="onCancel()">Cancel</button>
-    <button mat-raised-button color="primary" (click)="onConfirm()">
-      Save
-    </button>
-  </mat-dialog-actions>
+<div *ngIf="data.type == 'confirm'">
+  <h2 mat-dialog-title>{{ data.title }}</h2>
+  <mat-dialog-content>
+    <p>{{ data.message }}</p>
+  </mat-dialog-content>
+  <div class="action-buttons">
+    <mat-dialog-actions>
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="onConfirm()">
+        Save
+      </button>
+    </mat-dialog-actions>
+  </div>
+</div>
+
+<div *ngIf="data.type == 'alert'">
+  <div mat-dialog-title style="font-weight: 400">Send form</div>
+  <div style="display: flex; border-bottom: 1px solid lightgray">
+    <div
+      style="
+        font-weight: 500;
+        align-content: center;
+        padding-right: 10px;
+        padding-left: 24px;
+      "
+    >
+      Send via
+    </div>
+    <div>
+      <mat-tab-group [selectedIndex]="1">
+        <mat-tab disabled>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">mail</mat-icon>
+          </ng-template>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">link</mat-icon>
+          </ng-template>
+        </mat-tab>
+
+        <mat-tab disabled>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">code</mat-icon>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+  <div style="margin-top: 25px; padding-left: 24px">
+    <strong>Link</strong>
+    <div
+      style="
+        margin-top: 10px;
+        margin-right: 10px;
+        border-bottom: 1px solid darkgray;
+        user-select: text;
+      "
+    >
+      {{ data.url }}
+    </div>
+  </div>
+  <div class="action-buttons" style="margin-top: 15px">
+    <mat-dialog-actions>
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-stroked-button color="primary" (click)="copyToClipBoard()">
+        Copy
+      </button>
+    </mat-dialog-actions>
+  </div>
 </div>

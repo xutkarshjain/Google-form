@@ -11,6 +11,7 @@ import { FormsListService } from '../services/forms-service';
 import { SaveFormResponse, type Form } from '../models/form';
 import { TemplateService } from '../services/template.service';
 import { Router } from '@angular/router';
+import { DialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-create-form',
@@ -64,7 +65,8 @@ export class CreateFormComponent implements OnInit {
     private route: ActivatedRoute,
     private FormService: FormsListService,
     private templateService: TemplateService,
-    private router: Router
+    private router: Router,
+    private dialogService: DialogService
   ) {}
 
   get sections(): FormArray {
@@ -242,9 +244,12 @@ export class CreateFormComponent implements OnInit {
         (saveResponse: SaveFormResponse) => {
           // re-render the form
           resolve(saveResponse);
+          this.parentForm.markAsPristine();
+          this.loader = false;
         },
         (error: any) => {
           reject(null);
+          this.loader = false;
         }
       );
     });
@@ -260,9 +265,10 @@ export class CreateFormComponent implements OnInit {
       // show validation error
       return;
     }
+    this.loader = true;
     this.submit()
-      .then(() => {
-        this.showPreviewURL();
+      .then((res: any) => {
+        this.showPreviewURL(res.formId);
       })
       .catch((error: any) => {
         this.showToast();
@@ -274,6 +280,7 @@ export class CreateFormComponent implements OnInit {
       // show validation error
       return;
     }
+    this.loader = true;
     this.submit()
       .then((formResponse: SaveFormResponse) => {
         this.openPreviewInNewTab(formResponse.formId);
@@ -290,9 +297,13 @@ export class CreateFormComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  showPreviewURL() {
+  showPreviewURL(url: string) {
     // show previewURL
-    console.log('showPreviewURL');
+    let baseUrl = window.location.origin;
+    console.log('baseUrl', baseUrl);
+    const confirmed = this.dialogService.alert(
+      `${baseUrl}/forms/${url}/viewform`
+    );
   }
 
   showToast() {

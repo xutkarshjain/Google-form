@@ -12,7 +12,17 @@ export class DialogService {
   confirm(title: string, message: string): Promise<boolean> {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '300px',
-      data: { title, message },
+      data: { title, message, type: 'confirm' },
+    });
+
+    return lastValueFrom(dialogRef.afterClosed());
+  }
+
+  alert(url: string): Promise<boolean> {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '600px',
+      data: { url, type: 'alert' },
+      position: { top: '30px' },
     });
 
     return lastValueFrom(dialogRef.afterClosed());

@@ -46,12 +46,14 @@
   margin-bottom: 12px;
   padding: 24px;
   padding-left: 17px;
+  word-wrap: break-word;
 }
 
 .section-header {
   padding: 12px 24px;
   background: var(--dark-color);
   border-radius: 8px 8px 0 0;
+  word-wrap: break-word;
 }
 
 .section-header .name {
@@ -68,6 +70,8 @@
   font-family: "docs-Roboto", Helvetica, Arial, sans-serif;
   letter-spacing: 0;
   margin-bottom: 12px;
+  word-wrap: break-word;
+  line-height: normal;
 }
 
 .form-description {
@@ -78,9 +82,10 @@
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 0.2px;
-  line-height: 20px;
   color: rgb(32, 33, 36);
   margin-top: 24px;
+  word-wrap: break-word;
+  line-height: normal;
 }
 
 .form-instruction {
@@ -100,6 +105,11 @@
   letter-spacing: 0;
   margin-bottom: 16px;
   margin-left: 10px;
+  word-wrap: break-word;
+}
+
+.option-label {
+  overflow-wrap: anywhere;
 }
 
 .required {

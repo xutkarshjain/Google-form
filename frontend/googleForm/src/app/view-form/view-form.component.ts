@@ -3,6 +3,8 @@ import { form, section, question, option } from '../models/view-form.model';
 import { FormArray, FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { DataRowOutlet } from '@angular/cdk/table';
 import { ViewFormService } from '../services/view-form.service';
+import { QuestionType } from '../constants/question-types.enum';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-view-form',
   templateUrl: './view-form.component.html',
@@ -14,31 +16,43 @@ export class ViewFormComponent implements OnInit {
   responseData!: form;
   favoriteSeason: string = '';
   loader: boolean = true;
+  formId: string = '';
+  QuestionType = QuestionType;
 
   constructor(
     private fb: FormBuilder,
-    private viewFormService: ViewFormService
+    private viewFormService: ViewFormService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.viewFormService.getRespondentForm('123').subscribe(
-      (formResponse: form) => {
-        this.responseData = formResponse;
-        this.viewForm = this.fb.group({
-          formId: this.responseData.formId,
-          submittedBy: '',
-          submittedOn: '',
-          sections: this.fb.array([]),
-        });
+    // fetch id from url
+    this.route.params.subscribe(
+      (params) => {
+        this.formId = params['id'];
+        this.viewFormService.getRespondentForm(this.formId).subscribe(
+          (formResponse: form) => {
+            this.responseData = formResponse;
+            this.viewForm = this.fb.group({
+              formId: this.responseData.formId,
+              submittedBy: '',
+              submittedOn: '',
+              sections: this.fb.array([]),
+            });
 
-        for (let sectionData of this.responseData.sections) {
-          this.addSection(sectionData);
-        }
-        this.loader = false;
+            for (let sectionData of this.responseData.sections) {
+              this.addSection(sectionData);
+            }
+            this.loader = false;
+          },
+          (error: any) => {
+            console.log('error 404', error);
+            this.loader = false;
+          }
+        );
       },
       (error: any) => {
-        console.log('error', error);
-        this.loader = false;
+        // 404 page
       }
     );
   }
@@ -87,7 +101,7 @@ export class ViewFormComponent implements OnInit {
     questions.push(question);
 
     let questionIndex = questions.length - 1;
-    if (data.type == 'mcq') {
+    if (data.type == QuestionType.single_select) {
       let currentOptionsArray = questions
         .at(questionIndex)
         .get('options') as FormArray;

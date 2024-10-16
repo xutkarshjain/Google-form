@@ -4,3 +4,7 @@ export interface FormDetails {
   createdBy: string;
   modifiedOn: string;
 }
+
+export interface FormDetailResponse {
+  forms: FormDetails[];
+}

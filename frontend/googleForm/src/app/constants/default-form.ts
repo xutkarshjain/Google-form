@@ -1,4 +1,5 @@
 import { Form } from '../models/form';
+import { QuestionType } from './question-types.enum';
 export const defaultData: Form = {
   formId: null,
   formName: 'Untitled form',
@@ -12,7 +13,7 @@ export const defaultData: Form = {
         {
           id: null,
           label: 'Question',
-          type: 'Checkboxes',
+          type: QuestionType.single_select,
           shuffle: false,
           required: false,
           options: [{ id: null, label: 'Option' }],

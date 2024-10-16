@@ -11,8 +11,10 @@ export class ViewFormService {
   constructor(private http: HttpClient) {}
 
   getRespondentForm(formId: string): Observable<form> {
-    return this.http
-      .get<form>(API_URLS.FETCH_RESPONDENT_FORM)
-      .pipe(delay(1000));
+    return this.http.get<form>(`${API_URLS.FETCH_RESPONDENT_FORM}/${formId}`);
+
+    // return this.http
+    //   .get<form>(API_URLS.FETCH_RESPONDENT_FORM)
+    //   .pipe(delay(1000));
   }
 }

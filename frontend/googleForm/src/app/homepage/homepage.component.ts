@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { FormsListService } from '../services/forms-service';
 import { TemplateService } from '../services/template.service';
-import { type FormDetails } from '../models/form-detail';
+import { type FormDetails, FormDetailResponse } from '../models/form-detail';
 import { type User } from '../models/user';
 import { type Template } from '../models/template';
 
@@ -52,10 +52,18 @@ export class HomepageComponent implements OnInit {
       this.loggedInUser = userResponse.id;
       this.formsService
         .getFormsByUserId(this.loggedInUser)
-        .subscribe((fomsListResponse: FormDetails[]) => {
-          this.formsList = fomsListResponse;
+        .subscribe((fomsListResponse: FormDetailResponse) => {
+          this.formsList = this.sortItemsByDate(fomsListResponse.forms);
           this.loading = false;
         });
+    });
+  }
+
+  sortItemsByDate(arr: FormDetails[]) {
+    return arr.sort((a: FormDetails, b: FormDetails) => {
+      return (
+        new Date(b.modifiedOn).getTime() - new Date(a.modifiedOn).getTime()
+      );
     });
   }
 

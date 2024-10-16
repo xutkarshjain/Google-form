@@ -12,6 +12,9 @@ import { SaveFormResponse, type Form } from '../models/form';
 import { TemplateService } from '../services/template.service';
 import { Router } from '@angular/router';
 import { DialogService } from '../services/dialog.service';
+import { UserService } from '../services/user.service';
+import { User } from '../models/user';
+import { QuestionType } from '../constants/question-types.enum';
 
 @Component({
   selector: 'app-create-form',
@@ -44,7 +47,7 @@ export class CreateFormComponent implements OnInit {
           {
             id: null,
             label: 'Question',
-            type: 'Checkboxes',
+            type: QuestionType.single_select,
             shuffle: false,
             required: false,
             options: [{ id: null, label: 'Option' }],
@@ -56,8 +59,11 @@ export class CreateFormComponent implements OnInit {
 
   parentForm!: FormGroup;
   questionTypes: any = [
-    { value: 'Multiple choice', viewValue: 'Multiple choice' },
-    { value: 'Checkboxes', viewValue: 'Checkboxes' },
+    {
+      value: QuestionType.single_select,
+      viewValue: 'Multiple choice',
+    },
+    { value: QuestionType.multi_select, viewValue: 'Checkboxes' },
   ];
 
   constructor(
@@ -66,7 +72,8 @@ export class CreateFormComponent implements OnInit {
     private FormService: FormsListService,
     private templateService: TemplateService,
     private router: Router,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private userService: UserService
   ) {}
 
   get sections(): FormArray {
@@ -228,19 +235,20 @@ export class CreateFormComponent implements OnInit {
 
   getIconForQuestionType(type: string, filled: boolean) {
     if (filled) {
-      if (type == 'Multiple choice') return 'radio_button_checked';
-      else if (type == 'Checkboxes') return 'check_box';
+      if (type == QuestionType.single_select) return 'radio_button_checked';
+      else if (type == QuestionType.multi_select) return 'check_box';
       else return '';
     } else {
-      if (type == 'Multiple choice') return 'radio_button_unchecked';
-      else if (type == 'Checkboxes') return 'check_box_outline_blank';
+      if (type == QuestionType.single_select) return 'radio_button_unchecked';
+      else if (type == QuestionType.multi_select)
+        return 'check_box_outline_blank';
       else return '';
     }
   }
 
-  submit(): Promise<any> {
+  submit(req: any): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.FormService.saveForm(this.parentForm).subscribe(
+      this.FormService.saveForm(req).subscribe(
         (saveResponse: SaveFormResponse) => {
           // re-render the form
           resolve(saveResponse);
@@ -266,13 +274,21 @@ export class CreateFormComponent implements OnInit {
       return;
     }
     this.loader = true;
-    this.submit()
-      .then((res: any) => {
-        this.showPreviewURL(res.formId);
-      })
-      .catch((error: any) => {
-        this.showToast();
-      });
+    let req: any = JSON.parse(JSON.stringify(this.parentForm.value));
+    this.userService.getLoggedInUser().subscribe((res: User) => {
+      let audit: any = {};
+      audit['modifiedBy'] = res.id;
+      audit['createdBy'] = res.id;
+      req['audit'] = audit;
+
+      this.submit(req)
+        .then((res: any) => {
+          this.showPreviewURL(res.formId);
+        })
+        .catch((error: any) => {
+          this.showToast();
+        });
+    });
   }
 
   saveAndOpenPreview() {
@@ -281,13 +297,22 @@ export class CreateFormComponent implements OnInit {
       return;
     }
     this.loader = true;
-    this.submit()
-      .then((formResponse: SaveFormResponse) => {
-        this.openPreviewInNewTab(formResponse.formId);
-      })
-      .catch((error: any) => {
-        this.showToast();
-      }); // .then open preview in new tab
+
+    let req: any = JSON.parse(JSON.stringify(this.parentForm.value));
+    this.userService.getLoggedInUser().subscribe((res: User) => {
+      let audit: any = {};
+      audit['modifiedBy'] = res.id;
+      audit['createdBy'] = res.id;
+      req['audit'] = audit;
+
+      this.submit(req)
+        .then((formResponse: SaveFormResponse) => {
+          this.openPreviewInNewTab(formResponse.formId);
+        })
+        .catch((error: any) => {
+          this.showToast();
+        }); // .then open preview in new tab
+    });
   }
 
   openPreviewInNewTab(formId: string) {
@@ -424,5 +449,12 @@ export class CreateFormComponent implements OnInit {
               : 'Untitled section',
         });
     }, 0);
+  }
+
+  getDisplayNameUsingValue(value: string) {
+    let option = this.questionTypes.find((item: any) => {
+      return item.value == value;
+    });
+    return option.viewValue || '';
   }
 }

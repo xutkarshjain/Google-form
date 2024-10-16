@@ -114,7 +114,7 @@
       <div>
         <div class="options">
           <div formArrayName="options">
-            <div *ngIf="questionData.type == 'mcq'">
+            <div *ngIf="questionData.type == QuestionType.single_select">
               <div
                 *ngFor="
                   let option of getOptions(sectionIndex, questionIndex)
@@ -132,14 +132,16 @@
                       *ngFor="let option of questionData.options"
                       [value]="option.id"
                     >
-                      {{ option.label }}
+                      <div class="option-label">
+                        {{ option.label }}
+                      </div>
                     </mat-radio-button>
                   </mat-radio-group>
                 </div>
               </div>
             </div>
 
-            <div *ngIf="questionData.type == 'Checkboxes'">
+            <div *ngIf="questionData.type == QuestionType.multi_select">
               <div *ngFor="let option of questionData.options">
                 <mat-checkbox
                   [id]="option.id"
@@ -156,7 +158,9 @@
                     )
                   "
                 >
-                  {{ option.label }}
+                  <div class="option-label">
+                    {{ option.label }}
+                  </div>
                 </mat-checkbox>
               </div>
             </div>

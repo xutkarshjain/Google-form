@@ -226,7 +226,9 @@
                     }}</mat-icon>
 
                     <span style="margin-left: 10px">{{
-                      getQuestions(sectionIndex).at(questionIndex).value.type
+                      getDisplayNameUsingValue(
+                        getQuestions(sectionIndex).at(questionIndex).value.type
+                      )
                     }}</span>
                   </mat-select-trigger>
                   <mat-option

@@ -20,6 +20,5 @@ export interface section {
 
 export interface form {
   formId: string;
-  formName: string;
   sections: section[];
 }

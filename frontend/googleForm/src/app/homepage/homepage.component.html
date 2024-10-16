@@ -93,7 +93,7 @@
       <ng-container matColumnDef="lastModified">
         <th mat-header-cell *matHeaderCellDef>Last modified</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.modifiedOn | date }}
+          {{ element.modifiedOn | date : "medium" }}
         </td>
       </ng-container>
 

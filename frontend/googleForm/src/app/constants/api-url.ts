@@ -7,6 +7,7 @@ export const API_URLS = {
   FETCH_ALL_RESPONSES: 'assets/mock-data/form-responses-list.json',
   FETCH_RESPONDENT_FORM: baseUrl + 'api/v1/forms/published',
   SAVE_FORM: baseUrl + 'api/v1/forms',
+  SAVE_USER_RESPONSE: baseUrl + 'api/v1/forms/response',
 };
 
 // FETCH_ALL_FORMS: 'assets/mock-data/fetch-all-forms.json',

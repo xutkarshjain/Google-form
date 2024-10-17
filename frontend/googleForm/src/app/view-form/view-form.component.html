@@ -106,6 +106,8 @@
 >
   <div [formGroup]="question">
     <div class="question mcq card px24">
+      <!-- [ngClass]="{ 'required-question': questionData.required }" -->
+
       <div class="question-text">
         {{ questionData.label }}
 
@@ -166,6 +168,10 @@
             </div>
           </div>
         </div>
+        <!-- <div *ngIf="questionData.required" class="required validation-warning">
+          <mat-icon class="material-icons-outlined">error</mat-icon>
+          <div class="error-message">This is a required question</div>
+        </div> -->
       </div>
     </div>
   </div>

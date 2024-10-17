@@ -99,6 +99,10 @@
   padding-bottom: 24px;
 }
 
+.required-question {
+  border: 1px solid rgb(217, 48, 37);
+}
+
 .question-text {
   font-size: 12pt;
   font-family: "docs-Roboto", Helvetica, Arial, sans-serif;
@@ -113,7 +117,22 @@
 }
 
 .required {
-  color: red;
+  color: rgb(217, 48, 37);
+}
+
+.validation-warning {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding-left: 10px;
+}
+
+.validation-warning mat-icon {
+  margin-right: 5px;
+}
+
+.validation-warning .error-message {
+  padding-top: 2px;
 }
 
 .mat-mdc-radio-button.mat-primary,

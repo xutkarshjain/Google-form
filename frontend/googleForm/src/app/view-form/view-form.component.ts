@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { form, section, question, option } from '../models/view-form.model';
-import { FormArray, FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { DataRowOutlet } from '@angular/cdk/table';
 import { ViewFormService } from '../services/view-form.service';
 import { QuestionType } from '../constants/question-types.enum';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../services/user.service';
+import { User } from '../models/user';
+
 @Component({
   selector: 'app-view-form',
   templateUrl: './view-form.component.html',
@@ -18,11 +21,13 @@ export class ViewFormComponent implements OnInit {
   loader: boolean = true;
   formId: string = '';
   QuestionType = QuestionType;
+  loggedInUser!: User;
 
   constructor(
     private fb: FormBuilder,
     private viewFormService: ViewFormService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +49,9 @@ export class ViewFormComponent implements OnInit {
               this.addSection(sectionData);
             }
             this.loader = false;
+            this.userService.getLoggedInUser().subscribe((userRes: User) => {
+              this.loggedInUser = userRes;
+            });
           },
           (error: any) => {
             console.log('error 404', error);
@@ -123,6 +131,45 @@ export class ViewFormComponent implements OnInit {
 
   submitForm() {
     console.log('form', this.viewForm.value);
+    let request: any = {};
+    request['formId'] = this.viewForm.value.formId;
+    request['submittedBy'] = this.loggedInUser.id;
+    request['submittedOn'] = new Date();
+    let sections: any = [];
+    for (let section of this.viewForm.value.sections) {
+      let sectionObj: any = {};
+      sectionObj.id = section.id;
+      let questions: any = [];
+      for (let question of section.questions) {
+        let questionObj: any = {};
+        questionObj.id = question.id;
+        let options: any = [];
+        for (let option of question.options) {
+          if (option != '') {
+            options.push(option);
+          }
+        }
+        if (options.length) {
+          questionObj.options = options;
+          questions.push(questionObj);
+        }
+      }
+      if (questions.length) {
+        sectionObj.questions = questions;
+        sections.push(sectionObj);
+      }
+    }
+    request.sections = sections;
+    console.log('request', request);
+    this.viewFormService.saveUSerResponse(request).subscribe(
+      (saveResponse: any) => {
+        console.log('success', saveResponse);
+        // redirect to submit screen
+      },
+      (error: any) => {
+        console.log('error', error);
+      }
+    );
   }
 
   // Method to handle change events on the checkboxes

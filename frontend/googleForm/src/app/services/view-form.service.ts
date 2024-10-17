@@ -17,4 +17,9 @@ export class ViewFormService {
     //   .get<form>(API_URLS.FETCH_RESPONDENT_FORM)
     //   .pipe(delay(1000));
   }
+
+  saveUSerResponse(userResponse: any): Observable<any> {
+    let body = userResponse;
+    return this.http.post<any>(API_URLS.SAVE_USER_RESPONSE, body);
+  }
 }

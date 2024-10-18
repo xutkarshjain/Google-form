@@ -35,32 +35,37 @@ export class ViewFormComponent implements OnInit {
     this.route.params.subscribe(
       (params) => {
         this.formId = params['id'];
-        this.viewFormService.getRespondentForm(this.formId).subscribe(
-          (formResponse: form) => {
-            this.responseData = formResponse;
-            this.viewForm = this.fb.group({
-              formId: this.responseData.formId,
-              submittedBy: '',
-              submittedOn: '',
-              sections: this.fb.array([]),
-            });
 
-            for (let sectionData of this.responseData.sections) {
-              this.addSection(sectionData);
-            }
-            this.loader = false;
-            this.userService.getLoggedInUser().subscribe((userRes: User) => {
-              this.loggedInUser = userRes;
-            });
-          },
-          (error: any) => {
-            console.log('error 404', error);
-            this.loader = false;
-          }
-        );
+        this.initializeViewForm();
       },
       (error: any) => {
         // 404 page
+      }
+    );
+  }
+
+  initializeViewForm() {
+    this.viewFormService.getRespondentForm(this.formId).subscribe(
+      (formResponse: form) => {
+        this.responseData = formResponse;
+        this.viewForm = this.fb.group({
+          formId: this.responseData.formId,
+          submittedBy: '',
+          submittedOn: '',
+          sections: this.fb.array([]),
+        });
+
+        for (let sectionData of this.responseData.sections) {
+          this.addSection(sectionData);
+        }
+        this.loader = false;
+        this.userService.getLoggedInUser().subscribe((userRes: User) => {
+          this.loggedInUser = userRes;
+        });
+      },
+      (error: any) => {
+        console.log('error 404', error);
+        this.loader = false;
       }
     );
   }
@@ -194,5 +199,9 @@ export class ViewFormComponent implements OnInit {
     const options = this.getOptions(sectionIndex, questionIndex);
     const isPresent = options.controls.findIndex((x) => x.value === id);
     return isPresent >= 0;
+  }
+
+  clearForm() {
+    this.initializeViewForm();
   }
 }

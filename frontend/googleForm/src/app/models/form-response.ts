@@ -1,5 +1,4 @@
 export interface FormResponse {
-  formId: number | null;
   responses: Response[]; // Responses will always be an array, but it can be empty
 }
 

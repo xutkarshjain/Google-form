@@ -11,6 +11,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import Chart from 'chart.js/auto';
 import { FormResponsesService } from '../services/form-responses.service';
 import { FormResponse } from '../models/form-response';
+import { QuestionType } from '../constants/question-types.enum';
 
 @Component({
   selector: 'app-form-responses',
@@ -50,7 +51,6 @@ export class FormResponsesComponent
   ];
 
   responses: FormResponse = {
-    formId: null,
     responses: [],
   };
 
@@ -144,7 +144,7 @@ export class FormResponsesComponent
           question.id
         );
 
-        if (question.type.toLowerCase() == 'Checkboxes') {
+        if (question.type.toLowerCase() == QuestionType.multi_select) {
           if (labels.length < 10) {
             questionObj.height = '200px';
           } else if (labels.length < 16) {
@@ -175,15 +175,22 @@ export class FormResponsesComponent
   }
 
   createCharts() {
+    console.log('createCharts');
     for (let section of this.formSummary) {
       for (let question of section.questions) {
-        if (question.type == 'Multiple choice' && question.responseCount) {
+        if (
+          question.type == QuestionType.single_select &&
+          question.responseCount
+        ) {
           this.createPieChart(
             question.labels,
             question.count,
             question.selector
           );
-        } else if (question.type == 'Checkboxes' && question.responseCount) {
+        } else if (
+          question.type == QuestionType.multi_select &&
+          question.responseCount
+        ) {
           this.createBarChart(
             question.labels,
             question.count,
@@ -223,7 +230,7 @@ export class FormResponsesComponent
   ngAfterViewInit() {
     setTimeout(() => {
       this.createCharts();
-    }, 1500);
+    }, 500);
   }
 
   tabChange(tab: MatTabChangeEvent) {

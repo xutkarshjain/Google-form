@@ -252,7 +252,6 @@ export class CreateFormComponent implements OnInit {
         (saveResponse: SaveFormResponse) => {
           // re-render the form
           resolve(saveResponse);
-          this.parentForm.markAsPristine();
           this.loader = false;
         },
         (error: any) => {
@@ -284,6 +283,10 @@ export class CreateFormComponent implements OnInit {
       this.submit(req)
         .then((res: any) => {
           this.showPreviewURL(res.formId);
+          this.loadFormData();
+          if (!req.formId) {
+            this.router.navigate(['/forms/edit/', res.formId]);
+          }
         })
         .catch((error: any) => {
           this.showToast();
@@ -308,6 +311,10 @@ export class CreateFormComponent implements OnInit {
       this.submit(req)
         .then((formResponse: SaveFormResponse) => {
           this.openPreviewInNewTab(formResponse.formId);
+          this.loadFormData();
+          if (!req.formId) {
+            this.router.navigate(['/forms/edit/', formResponse.formId]);
+          }
         })
         .catch((error: any) => {
           this.showToast();

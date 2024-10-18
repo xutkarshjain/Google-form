@@ -11,12 +11,11 @@ export class FormResponsesService {
   constructor(private http: HttpClient) {}
 
   fetchAllResponse(formId: string): Observable<FormResponse> {
-    const body: any = {
-      formId: formId,
-    };
-    return this.http
-      .get<FormResponse>(API_URLS.FETCH_ALL_RESPONSES)
-      .pipe(delay(400));
-    // return this.http.post<FormResponse[]>(API_URLS.FETCH_ALL_RESPONSES, body);
+    // return this.http
+    //   .get<FormResponse>(API_URLS.FETCH_ALL_RESPONSES)
+    //   .pipe(delay(400));
+    return this.http.get<FormResponse>(
+      `${API_URLS.FETCH_ALL_RESPONSES}/${formId}`
+    );
   }
 }

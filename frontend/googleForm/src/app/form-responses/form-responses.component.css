@@ -45,6 +45,7 @@ mat-card {
   line-height: 24px;
   color: rgb(32, 33, 36);
   font-weight: 400;
+  word-wrap: break-word;
 }
 
 .section-header {
@@ -54,4 +55,5 @@ mat-card {
   color: white;
   font-size: 16px;
   font-weight: 400;
+  word-wrap: break-word;
 }

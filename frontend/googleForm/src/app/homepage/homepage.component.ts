@@ -50,13 +50,17 @@ export class HomepageComponent implements OnInit {
     this.updateBreakPoint();
     this.userService.getLoggedInUser().subscribe((userResponse: User) => {
       this.loggedInUser = userResponse.id;
-      this.formsService
-        .getFormsByUserId(this.loggedInUser)
-        .subscribe((fomsListResponse: FormDetailResponse) => {
-          this.formsList = this.sortItemsByDate(fomsListResponse.forms);
-          this.loading = false;
-        });
+      this.fetchAllForms();
     });
+  }
+
+  fetchAllForms() {
+    this.formsService
+      .getFormsByUserId(this.loggedInUser)
+      .subscribe((fomsListResponse: FormDetailResponse) => {
+        this.formsList = this.sortItemsByDate(fomsListResponse.forms);
+        this.loading = false;
+      });
   }
 
   sortItemsByDate(arr: FormDetails[]) {
@@ -101,5 +105,14 @@ export class HomepageComponent implements OnInit {
     } else {
       this.breakpoint = 1;
     }
+  }
+
+  deleteForm(e: Event, row: FormDetails) {
+    e.stopPropagation();
+    this.formsService
+      .deleteFormByFormId(row.formId)
+      .subscribe((deleteRes: any) => {
+        console.log('deleted');
+      });
   }
 }

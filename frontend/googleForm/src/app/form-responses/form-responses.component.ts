@@ -27,6 +27,7 @@ export class FormResponsesComponent
   ) {}
 
   @Input() formData!: Form;
+  @Input() formId!: string | null;
   selectedTab: string = 'Summary';
   tabs: string[] = ['Summary', 'Question', 'Individual'];
   primaryColor = 'rgb(103, 58, 183)';
@@ -212,9 +213,9 @@ export class FormResponsesComponent
   ngOnInit(): void {}
 
   ngOnChanges() {
-    if (this.formData.formId) {
+    if (this.formId) {
       this.formResponsesService
-        .fetchAllResponse(this.formData.formId)
+        .fetchAllResponse(this.formId)
         .subscribe((responseList: FormResponse) => {
           this.responses = responseList;
           this.initializeOptionsFrequency();

@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { form, section, question, option } from '../models/view-form.model';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  AbstractControl,
+  ValidationErrors,
+  ValidatorFn,
+} from '@angular/forms';
 import { DataRowOutlet } from '@angular/cdk/table';
 import { ViewFormService } from '../services/view-form.service';
 import { QuestionType } from '../constants/question-types.enum';
@@ -22,6 +29,7 @@ export class ViewFormComponent implements OnInit {
   formId: string = '';
   QuestionType = QuestionType;
   loggedInUser!: User;
+  showError: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -36,7 +44,7 @@ export class ViewFormComponent implements OnInit {
       (params) => {
         this.formId = params['id'];
 
-        this.initializeViewForm();
+        this.fetchFormData();
       },
       (error: any) => {
         // 404 page
@@ -44,24 +52,11 @@ export class ViewFormComponent implements OnInit {
     );
   }
 
-  initializeViewForm() {
+  fetchFormData() {
     this.viewFormService.getRespondentForm(this.formId).subscribe(
       (formResponse: form) => {
         this.responseData = formResponse;
-        this.viewForm = this.fb.group({
-          formId: this.responseData.formId,
-          submittedBy: '',
-          submittedOn: '',
-          sections: this.fb.array([]),
-        });
-
-        for (let sectionData of this.responseData.sections) {
-          this.addSection(sectionData);
-        }
-        this.loader = false;
-        this.userService.getLoggedInUser().subscribe((userRes: User) => {
-          this.loggedInUser = userRes;
-        });
+        this.initializeForm();
       },
       (error: any) => {
         console.log('error 404', error);
@@ -70,6 +65,24 @@ export class ViewFormComponent implements OnInit {
     );
   }
 
+  initializeForm() {
+    this.showError = false;
+    this.viewForm = this.fb.group({
+      formId: this.formId,
+      submittedBy: '',
+      submittedOn: '',
+      sections: this.fb.array([]),
+    });
+
+    for (let sectionData of this.responseData.sections) {
+      this.addSection(sectionData);
+    }
+
+    this.loader = false;
+    this.userService.getLoggedInUser().subscribe((userRes: User) => {
+      this.loggedInUser = userRes;
+    });
+  }
   get sections(): FormArray {
     return this.viewForm?.get('sections') as FormArray;
   }
@@ -81,14 +94,6 @@ export class ViewFormComponent implements OnInit {
   getOptions(sectionIndex: number, questionIndex: number) {
     let question = this.getQuestions(sectionIndex).at(questionIndex);
     return question.get('options') as FormArray;
-  }
-
-  getOption(sectionIndex: number, questionIndex: number, optionIndex: number) {
-    let option =
-      this.responseData['sections'][sectionIndex]['questions'][questionIndex][
-        'options'
-      ][optionIndex];
-    return option;
   }
 
   addSection(data: section) {
@@ -105,21 +110,32 @@ export class ViewFormComponent implements OnInit {
   }
 
   addQuestion(sectionIndex: number, data: question) {
+    console.log('data.required', data.required);
     let question = this.fb.group({
       id: data.id,
-      options: this.fb.array([]),
+      options: this.fb.array(
+        [],
+        this.minFormArrayLengthValidator(data.required ? 1 : 0)
+      ),
     });
 
     let questions = this.getQuestions(sectionIndex);
     questions.push(question);
+  }
 
-    let questionIndex = questions.length - 1;
-    if (data.type == QuestionType.single_select) {
-      let currentOptionsArray = questions
-        .at(questionIndex)
-        .get('options') as FormArray;
-      currentOptionsArray.push(this.fb.control(''));
-    }
+  minFormArrayLengthValidator(minLength: number = 0): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const formArray = control as any as { controls: AbstractControl[] }; // Cast to FormArray
+      if (formArray.controls && formArray.controls.length >= minLength) {
+        return null; // Valid
+      }
+      return {
+        minFormArrayLength: {
+          requiredLength: minLength,
+          actualLength: formArray.controls.length,
+        },
+      }; // Invalid
+    };
   }
 
   getFirstSection() {
@@ -127,6 +143,13 @@ export class ViewFormComponent implements OnInit {
   }
 
   nextSection() {
+    console.log('form', this.sections.at(this.currentSectionindex).invalid);
+    if (this.sections.at(this.currentSectionindex).invalid) {
+      this.showError = true;
+      console.log('Invalid');
+      return;
+    }
+    this.showError = false;
     this.currentSectionindex += 1;
   }
 
@@ -135,9 +158,16 @@ export class ViewFormComponent implements OnInit {
   }
 
   submitForm() {
-    console.log('form', this.viewForm.value);
+    console.log('form', this.viewForm);
+    if (this.viewForm.invalid) {
+      this.showError = true;
+      console.log('Invalid');
+      return;
+    }
+    this.showError = false;
+
     let request: any = {};
-    request['formId'] = this.viewForm.value.formId;
+    request['formId'] = this.formId;
     request['submittedBy'] = this.loggedInUser.id;
     request['submittedOn'] = new Date();
     let sections: any = [];
@@ -177,6 +207,18 @@ export class ViewFormComponent implements OnInit {
     );
   }
 
+  // Method to handle change events on the radio button
+  onRadioChange(
+    event: any,
+    value: number,
+    sectionIndex: number,
+    questionIndex: number
+  ) {
+    let selectedOptions = this.getOptions(sectionIndex, questionIndex);
+    selectedOptions.removeAt(0);
+    selectedOptions.push(this.fb.control(value));
+  }
+
   // Method to handle change events on the checkboxes
   onCheckboxChange(
     event: any,
@@ -202,6 +244,6 @@ export class ViewFormComponent implements OnInit {
   }
 
   clearForm() {
-    this.initializeViewForm();
+    this.initializeForm();
   }
 }

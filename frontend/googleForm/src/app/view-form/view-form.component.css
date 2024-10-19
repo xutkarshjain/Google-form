@@ -99,6 +99,14 @@
   padding-bottom: 24px;
 }
 
+.first-question-subsequent-section {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.first-question-subsequent-section.required-question {
+  border-top: 0 !important;
+}
+
 .required-question {
   border: 1px solid rgb(217, 48, 37);
 }

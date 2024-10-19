@@ -26,6 +26,10 @@ export class FormsListService {
     return this.http.get<Form>(`${API_URLS.FETCH_FORM_BY_ID}/${formId}`);
   }
 
+  deleteFormByFormId(formId: string): Observable<any> {
+    return this.http.delete<any>(`${API_URLS.DELETE_FORM_BY_ID}/${formId}`);
+  }
+
   saveForm(form: any): Observable<SaveFormResponse> {
     // form payload
     // return this.http

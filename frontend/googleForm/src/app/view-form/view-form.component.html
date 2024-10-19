@@ -105,9 +105,17 @@
   let-questionData="questionData"
 >
   <div [formGroup]="question">
-    <div class="question mcq card px24">
-      <!-- [ngClass]="{ 'required-question': questionData.required }" -->
-
+    <div
+      class="question mcq card px24"
+      [ngClass]="{
+        'first-question-subsequent-section':
+          sectionIndex > 0 && questionIndex == 0,
+        'required-question':
+          showError &&
+          questionData.required &&
+          getQuestions(sectionIndex).at(questionIndex).invalid
+      }"
+    >
       <div class="question-text">
         {{ questionData.label }}
 
@@ -117,30 +125,24 @@
         <div class="options">
           <div formArrayName="options">
             <div *ngIf="questionData.type == QuestionType.single_select">
-              <div
-                *ngFor="
-                  let option of getOptions(sectionIndex, questionIndex)
-                    .controls;
-                  let optionIndex = index
-                "
-              >
-                <div *ngIf="optionIndex == 0">
-                  <mat-radio-group
-                    aria-label="Select an option"
-                    color="primary"
-                    [formControlName]="optionIndex"
-                  >
-                    <mat-radio-button
-                      *ngFor="let option of questionData.options"
-                      [value]="option.id"
-                    >
-                      <div class="option-label">
-                        {{ option.label }}
-                      </div>
-                    </mat-radio-button>
-                  </mat-radio-group>
-                </div>
-              </div>
+              <mat-radio-group aria-label="Select an option" color="primary">
+                <mat-radio-button
+                  *ngFor="let option of questionData.options"
+                  [value]="option.id"
+                  (change)="
+                    onRadioChange(
+                      $event,
+                      option.id,
+                      sectionIndex,
+                      questionIndex
+                    )
+                  "
+                >
+                  <div class="option-label">
+                    {{ option.label }}
+                  </div>
+                </mat-radio-button>
+              </mat-radio-group>
             </div>
 
             <div *ngIf="questionData.type == QuestionType.multi_select">
@@ -168,10 +170,15 @@
             </div>
           </div>
         </div>
-        <!-- <div *ngIf="questionData.required" class="required validation-warning">
+        <div
+          *ngIf="
+            showError && getQuestions(sectionIndex).at(questionIndex).invalid
+          "
+          class="required validation-warning"
+        >
           <mat-icon class="material-icons-outlined">error</mat-icon>
           <div class="error-message">This is a required question</div>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>

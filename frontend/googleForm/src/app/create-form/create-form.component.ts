@@ -175,7 +175,7 @@ export class CreateFormComponent implements OnInit {
   initializeForm() {
     this.parentForm = this.fb.group({
       formName: [this.formData.formName, Validators.required],
-      formId: this.formData.formId,
+      formId: this.formId,
       sections: this.fb.array([]),
     });
     for (let section of this.formData.sections) {

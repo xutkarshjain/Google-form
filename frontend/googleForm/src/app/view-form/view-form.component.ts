@@ -11,9 +11,10 @@ import {
 import { DataRowOutlet } from '@angular/cdk/table';
 import { ViewFormService } from '../services/view-form.service';
 import { QuestionType } from '../constants/question-types.enum';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
+import { FormSubmissionService } from '../services/form-submission.service';
 
 @Component({
   selector: 'app-view-form',
@@ -35,7 +36,9 @@ export class ViewFormComponent implements OnInit {
     private fb: FormBuilder,
     private viewFormService: ViewFormService,
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private formSubmissionService: FormSubmissionService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -199,12 +202,23 @@ export class ViewFormComponent implements OnInit {
     this.viewFormService.saveUSerResponse(request).subscribe(
       (saveResponse: any) => {
         console.log('success', saveResponse);
+        this.formSubmissionService.setSubmitted(true);
+        this.formSubmissionService.setFormName(this.getFormName());
+        this.router.navigate(['/forms', this.formId, 'formResponse']);
         // redirect to submit screen
       },
       (error: any) => {
         console.log('error', error);
       }
     );
+  }
+
+  getFormName() {
+    console.log('responseData', this.responseData.sections[0].name);
+    if (this.responseData.sections.length) {
+      return this.responseData.sections[0].name;
+    }
+    return '';
   }
 
   // Method to handle change events on the radio button

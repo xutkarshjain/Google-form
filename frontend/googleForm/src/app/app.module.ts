@@ -34,6 +34,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FormSuccessComponent } from './form-success/form-success.component';
+import { FormFooterComponent } from './form-footer/form-footer.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     FormSettingsComponent,
     FormResponsesComponent,
     DialogComponent,
+    FormSuccessComponent,
+    FormFooterComponent,
   ],
   imports: [
     BrowserModule,

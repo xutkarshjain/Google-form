@@ -1,0 +1,61 @@
+:host {
+  --dark-color: #673ab7;
+  --light-color: #f0ebf8;
+}
+
+.body {
+  background: var(--light-color);
+  width: 100%;
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  max-width: 640px;
+  width: auto;
+  margin: auto;
+  padding: 12px;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid rgb(218, 220, 224);
+  border-radius: 8px;
+  padding: 26px 24px 24px 24px;
+}
+
+.form-header {
+  border-top: 10px solid var(--dark-color);
+  margin-top: 0;
+}
+
+.form-name {
+  font-size: 24pt;
+  font-family: "docs-Roboto", Helvetica, Arial, sans-serif;
+  letter-spacing: 0;
+  word-wrap: break-word;
+  padding-bottom: 16px;
+  line-height: normal;
+}
+
+.form-description {
+  font-size: 11pt;
+  line-height: 15pt;
+  letter-spacing: 0;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  color: rgb(32, 33, 36);
+  word-wrap: break-word;
+  line-height: normal;
+}
+
+.form-link {
+  margin-top: 25px;
+}
+
+.form-link a {
+  color: rgb(26, 115, 232);
+}

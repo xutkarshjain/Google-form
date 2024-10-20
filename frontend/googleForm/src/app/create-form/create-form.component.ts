@@ -137,12 +137,19 @@ export class CreateFormComponent implements OnInit {
     this.getOptions(sectionIndex, questionIndex).push(option);
   }
 
+  addOptionWrapper(sectionIndex: number, questionIndex: number) {
+    this.addOption(sectionIndex, questionIndex);
+    this.parentForm.markAsDirty();
+  }
+
   removeSection(sectionIndex: number) {
     this.sections.removeAt(sectionIndex);
+    this.parentForm.markAsDirty();
   }
 
   removeQuestion(sectionIndex: number, questionIndex: number) {
     this.getQuestions(sectionIndex).removeAt(questionIndex);
+    this.parentForm.markAsDirty();
   }
 
   removeOption(
@@ -151,6 +158,7 @@ export class CreateFormComponent implements OnInit {
     optionIndex: number
   ) {
     this.getOptions(sectionIndex, questionIndex).removeAt(optionIndex);
+    this.parentForm.markAsDirty();
   }
 
   ngOnInit(): void {
@@ -196,6 +204,8 @@ export class CreateFormComponent implements OnInit {
         },
         (error) => {
           console.error('Error occurred while fetching form:', error);
+          this.loader = false;
+          this.router.navigate(['/']);
           // redirect to 404 page
         }
       );
@@ -367,12 +377,14 @@ export class CreateFormComponent implements OnInit {
       this.selectedItem.sectionIndex,
       this.getQuestions(this.selectedItem.sectionIndex).length - 1
     );
+    this.parentForm.markAsDirty();
   }
 
   addSectionWrapper(event: any, data?: object) {
     event.stopPropagation();
     this.addSection(data);
     this.scrollToElement(this.sections.length - 1);
+    this.parentForm.markAsDirty();
   }
 
   removeSectionWrapper(event: any) {
@@ -388,18 +400,21 @@ export class CreateFormComponent implements OnInit {
   }
 
   duplicateQuestion(event: any, sectionIndex: number, questionIndex: number) {
-    this.addQuestionWrapper(
-      event,
-      JSON.parse(
-        JSON.stringify(this.getQuestions(sectionIndex).at(questionIndex).value)
-      )
+    let data = JSON.parse(
+      JSON.stringify(this.getQuestions(sectionIndex).at(questionIndex).value)
     );
+    data.id = null;
+
+    this.addQuestionWrapper(event, data);
+    this.parentForm.markAsDirty();
   }
 
   duplicateSection(event: any) {
     let sectionIndex = this.selectedItem.sectionIndex;
     let data = JSON.parse(JSON.stringify(this.sections.at(sectionIndex).value));
+    data.id = null;
     this.addSection(data);
+    this.parentForm.markAsDirty();
   }
 
   isShuffleOn() {

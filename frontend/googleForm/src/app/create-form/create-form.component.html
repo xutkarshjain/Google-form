@@ -89,6 +89,7 @@
                   "
                   matInput
                   formControlName="name"
+                  maxlength="250"
                   (blur)="onSectionNameBlur(sectionIndex)"
                 />
               </mat-form-field>
@@ -123,6 +124,7 @@
                   sectionIndex == 0 ? 'Form description' : 'Section description'
                 "
                 matInput
+                maxlength="250"
                 formControlName="description"
               />
             </mat-form-field>
@@ -199,6 +201,7 @@
                   placeholder="Question"
                   matInput
                   formControlName="label"
+                  maxlength="250"
                   (blur)="onQuestionBlur(sectionIndex, questionIndex)"
                 />
               </mat-form-field>
@@ -392,6 +395,7 @@
               placeholder="Option"
               matInput
               formControlName="label"
+              maxlength="250"
               (blur)="onOptionBlur(sectionIndex, questionIndex, optionIndex)"
             />
           </mat-form-field>

@@ -94,8 +94,8 @@ export class CreateFormComponent implements OnInit {
     let formValues = data || this.defaultData.sections[0];
     const section = this.fb.group({
       id: formValues.id || null,
-      name: [formValues.name, Validators.required],
-      description: formValues.description,
+      name: [formValues.name, [Validators.required, Validators.maxLength(250)]],
+      description: [formValues.description, [Validators.maxLength(250)]],
       shuffle: formValues.shuffle,
       questions: this.fb.array([]),
     });
@@ -112,8 +112,11 @@ export class CreateFormComponent implements OnInit {
     let formValues = data || this.defaultData.sections[0].questions[0];
     const question = this.fb.group({
       id: formValues.id,
-      label: formValues.label,
-      type: formValues.type,
+      label: [
+        formValues.label,
+        [Validators.required, Validators.maxLength(250)],
+      ],
+      type: [formValues.type, [Validators.required]],
       shuffle: formValues.shuffle,
       required: formValues.required,
       options: this.fb.array([]),
@@ -132,7 +135,10 @@ export class CreateFormComponent implements OnInit {
       data || this.defaultData.sections[0].questions[0].options[0];
     const option = this.fb.group({
       id: formValues.id,
-      label: [formValues.label, Validators.required],
+      label: [
+        formValues.label,
+        [Validators.required, Validators.maxLength(250)],
+      ],
     });
     this.getOptions(sectionIndex, questionIndex).push(option);
   }
@@ -182,7 +188,10 @@ export class CreateFormComponent implements OnInit {
 
   initializeForm() {
     this.parentForm = this.fb.group({
-      formName: [this.formData.formName, Validators.required],
+      formName: [
+        this.formData.formName,
+        [Validators.required, Validators.maxLength(250)],
+      ],
       formId: this.formId,
       sections: this.fb.array([]),
     });
@@ -274,7 +283,12 @@ export class CreateFormComponent implements OnInit {
 
   isFormValid(): boolean {
     // validate the form
-    return true;
+    if (this.parentForm.valid) {
+      return true;
+    }
+    console.log('validation', false);
+    // show toast
+    return false;
   }
 
   submitAndShowURL() {

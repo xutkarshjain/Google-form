@@ -417,9 +417,7 @@ export class CreateFormComponent implements OnInit {
     this.parentForm.markAsDirty();
   }
 
-  isShuffleOn() {
-    let sectionIndex = this.selectedItem.sectionIndex;
-    let questionIndex = this.selectedItem.questionIndex;
+  isShuffleOn(sectionIndex: number, questionIndex: number) {
     return this.getQuestions(sectionIndex).at(questionIndex).value.shuffle;
   }
 

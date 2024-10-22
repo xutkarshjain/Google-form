@@ -107,7 +107,7 @@ export class ViewFormComponent implements OnInit {
 
     this.sections.push(section);
     let sectionIndex = this.sections.value.length - 1;
-    for (let questionData of data.questions) {
+    for (let questionData of data.questions || []) {
       this.addQuestion(sectionIndex, questionData);
     }
   }
@@ -178,11 +178,11 @@ export class ViewFormComponent implements OnInit {
       let sectionObj: any = {};
       sectionObj.id = section.id;
       let questions: any = [];
-      for (let question of section.questions) {
+      for (let question of section.questions || []) {
         let questionObj: any = {};
         questionObj.id = question.id;
         let options: any = [];
-        for (let option of question.options) {
+        for (let option of question.options || []) {
           if (option != '') {
             options.push(option);
           }

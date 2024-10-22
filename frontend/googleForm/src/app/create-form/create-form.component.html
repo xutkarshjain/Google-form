@@ -348,8 +348,8 @@
                 mat-menu-item
                 class=""
                 [ngClass]="{
-                  pressed: isShuffleOn(),
-                  unPressed: !isShuffleOn(),
+                  pressed: isShuffleOn(sectionIndex, questionIndex),
+                  unPressed: !isShuffleOn(sectionIndex, questionIndex),
                 }"
                 (click)="toggleShuffleWrapper()"
               >

@@ -36,6 +36,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormSuccessComponent } from './form-success/form-success.component';
 import { FormFooterComponent } from './form-footer/form-footer.component';
+import { SnackBarComponent } from './snack-bar/snack-bar.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { FormFooterComponent } from './form-footer/form-footer.component';
     DialogComponent,
     FormSuccessComponent,
     FormFooterComponent,
+    SnackBarComponent,
   ],
   imports: [
     BrowserModule,

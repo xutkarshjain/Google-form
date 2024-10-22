@@ -15,6 +15,7 @@ import { DialogService } from '../services/dialog.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
 import { QuestionType } from '../constants/question-types.enum';
+import { SnackBarService } from '../services/snack-bar.service';
 
 @Component({
   selector: 'app-create-form',
@@ -73,7 +74,8 @@ export class CreateFormComponent implements OnInit {
     private templateService: TemplateService,
     private router: Router,
     private dialogService: DialogService,
-    private userService: UserService
+    private userService: UserService,
+    private snackBarService: SnackBarService
   ) {}
 
   get sections(): FormArray {
@@ -188,10 +190,7 @@ export class CreateFormComponent implements OnInit {
 
   initializeForm() {
     this.parentForm = this.fb.group({
-      formName: [
-        this.formData.formName,
-        [Validators.required, Validators.maxLength(250)],
-      ],
+      formName: [this.formData.formName],
       formId: this.formId,
       sections: this.fb.array([]),
     });
@@ -286,14 +285,12 @@ export class CreateFormComponent implements OnInit {
     if (this.parentForm.valid) {
       return true;
     }
-    console.log('validation', false);
-    // show toast
     return false;
   }
 
   submitAndShowURL() {
     if (!this.isFormValid()) {
-      // show validation error
+      this.snackBarService.openSnackBar('Invalid Form', 'center', 'top', 3);
       return;
     }
     this.loader = true;
@@ -313,7 +310,7 @@ export class CreateFormComponent implements OnInit {
           }
         })
         .catch((error: any) => {
-          this.showToast();
+          this.snackBarService.openSnackBar('Save Failed', 'center', 'top', 3);
         });
     });
   }
@@ -341,7 +338,7 @@ export class CreateFormComponent implements OnInit {
           }
         })
         .catch((error: any) => {
-          this.showToast();
+          this.snackBarService.openSnackBar('Save Failed', 'center', 'top', 3);
         }); // .then open preview in new tab
     });
   }
@@ -360,11 +357,6 @@ export class CreateFormComponent implements OnInit {
     const confirmed = this.dialogService.alert(
       `${baseUrl}/forms/${url}/viewform`
     );
-  }
-
-  showToast() {
-    // show toast
-    console.log('show toast');
   }
 
   toggleShuffle(sectionIndex: number, questionIndex: number) {

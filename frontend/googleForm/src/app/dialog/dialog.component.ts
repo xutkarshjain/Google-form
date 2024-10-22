@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { SnackBarService } from '../services/snack-bar.service';
 
 @Component({
   selector: 'app-dialog',
@@ -10,7 +10,7 @@ import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 export class DialogComponent {
   durationInSeconds = 1;
   constructor(
-    private _snackBar: MatSnackBar,
+    private snackBarService: SnackBarService,
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
@@ -23,37 +23,24 @@ export class DialogComponent {
     this.dialogRef.close(false);
   }
 
-  openSnackBar() {
-    this._snackBar.openFromComponent(PizzaPartyAnnotatedComponent, {
-      duration: this.durationInSeconds * 1000,
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
-  }
-
   copyToClipBoard(): void {
     navigator.clipboard.writeText(this.data.url).then(
       () => {
-        this.openSnackBar();
+        this.snackBarService.openSnackBar(
+          'Copied to clipboard.',
+          'start',
+          'bottom',
+          1
+        );
       },
       (err) => {
-        console.error('Failed to copy text: ', err);
+        this.snackBarService.openSnackBar(
+          'Failed to Copy.',
+          'start',
+          'bottom',
+          3
+        );
       }
     );
   }
-}
-
-@Component({
-  selector: 'snack-bar-annotated-component-example-snack',
-  templateUrl: 'snack-bar-annotated-component-example-snack.html',
-  styles: [
-    `
-      :host {
-        display: flex;
-      }
-    `,
-  ],
-})
-export class PizzaPartyAnnotatedComponent {
-  snackBarRef = Inject(MatSnackBarRef);
 }

@@ -454,6 +454,21 @@ export class CreateFormComponent implements OnInit {
     }
   }
 
+  onQuestionBlur(sectionIndex: number, questionIndex: number) {
+    setTimeout(() => {
+      let question = this.getQuestions(sectionIndex).at(questionIndex);
+      if (
+        question.value.label == null ||
+        question.value.label == undefined ||
+        question.value.label.trim() == ''
+      ) {
+        question.patchValue({
+          label: 'Untitled Question',
+        });
+      }
+    }, 0);
+  }
+
   onSectionNameBlur(sectionIndex: number) {
     setTimeout(() => {
       let section = this.sections.at(sectionIndex);

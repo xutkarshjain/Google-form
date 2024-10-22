@@ -199,6 +199,7 @@
                   placeholder="Question"
                   matInput
                   formControlName="label"
+                  (blur)="onQuestionBlur(sectionIndex, questionIndex)"
                 />
               </mat-form-field>
             </div>

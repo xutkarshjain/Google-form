@@ -13,8 +13,9 @@
   <span class="example-spacer"></span>
   <button
     mat-icon-button
-    class="example-icon favorite-icon"
+    class="example-icon favorite-icon disabled"
     aria-label="Example icon-button with heart icon"
+    matTooltip="( Future scope )"
   >
     <mat-icon>apps</mat-icon>
   </button>
@@ -22,6 +23,7 @@
     mat-icon-button
     class="example-icon"
     aria-label="Example icon-button with share icon"
+    (click)="shareForm()"
   >
     <mat-icon>share</mat-icon>
   </button>

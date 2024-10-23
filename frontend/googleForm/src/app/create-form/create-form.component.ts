@@ -213,8 +213,7 @@ export class CreateFormComponent implements OnInit {
         (error) => {
           console.error('Error occurred while fetching form:', error);
           this.loader = false;
-          this.router.navigate(['/']);
-          // redirect to 404 page
+          this.router.navigate(['/forms/pageDoesNotExist']);
         }
       );
     } else if (this.mode === 'template' && this.templateId) {
@@ -233,7 +232,7 @@ export class CreateFormComponent implements OnInit {
           this.mode = 'create';
           this.templateId = null;
           this.loadFormData();
-          // redirect to 404 page
+          this.router.navigate(['/forms/pageDoesNotExist']);
         }
       );
     } else {

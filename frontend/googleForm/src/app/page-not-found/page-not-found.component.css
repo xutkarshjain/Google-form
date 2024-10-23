@@ -1,0 +1,17 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: normal;
+}
+
+.container div {
+  text-align: center;
+}
+
+.heading,
+.not-found {
+  font-weight: 500;
+}

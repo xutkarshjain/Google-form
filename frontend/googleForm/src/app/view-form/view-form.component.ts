@@ -50,7 +50,7 @@ export class ViewFormComponent implements OnInit {
         this.fetchFormData();
       },
       (error: any) => {
-        // 404 page
+        this.router.navigate(['/forms/pageDoesNotExist']);
       }
     );
   }
@@ -62,7 +62,7 @@ export class ViewFormComponent implements OnInit {
         this.initializeForm();
       },
       (error: any) => {
-        console.log('error 404', error);
+        this.router.navigate(['/forms/pageDoesNotExist']);
         this.loader = false;
       }
     );

@@ -27,4 +27,14 @@ export class DialogService {
 
     return lastValueFrom(dialogRef.afterClosed());
   }
+
+  shareProject(url: string, content: string): Promise<boolean> {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '600px',
+      data: { url, content: content, type: 'shareProject' },
+      position: { top: '30px' },
+    });
+
+    return lastValueFrom(dialogRef.afterClosed());
+  }
 }

@@ -129,3 +129,7 @@ mat-toolbar {
   line-height: 24px;
   color: rgb(32, 33, 36);
 }
+
+.disabled {
+  cursor: not-allowed;
+}

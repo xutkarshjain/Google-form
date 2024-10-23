@@ -37,6 +37,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormSuccessComponent } from './form-success/form-success.component';
 import { FormFooterComponent } from './form-footer/form-footer.component';
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { SnackBarComponent } from './snack-bar/snack-bar.component';
     FormSuccessComponent,
     FormFooterComponent,
     SnackBarComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import { TemplateService } from '../services/template.service';
 import { type FormDetails, FormDetailResponse } from '../models/form-detail';
 import { type User } from '../models/user';
 import { type Template } from '../models/template';
+import { DialogService } from '../services/dialog.service';
 
 export interface formDetails {
   formId: number;
@@ -37,7 +38,8 @@ export class HomepageComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private formsService: FormsListService,
-    private templateService: TemplateService
+    private templateService: TemplateService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -114,5 +116,15 @@ export class HomepageComponent implements OnInit {
       .subscribe((deleteRes: any) => {
         console.log('deleted');
       });
+  }
+
+  shareForm() {
+    // show previewURL
+    let baseUrl = window.location.origin;
+    console.log('baseUrl', baseUrl);
+    const confirmed = this.dialogService.shareProject(
+      baseUrl,
+      'Check this out! This detailed Google Forms clone makes creating and customizing forms a breeze. Perfect for your next project!\n\n#GoogleFormsClone #CustomForms'
+    );
   }
 }

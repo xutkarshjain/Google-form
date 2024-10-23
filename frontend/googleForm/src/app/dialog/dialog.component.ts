@@ -23,8 +23,30 @@ export class DialogComponent {
     this.dialogRef.close(false);
   }
 
-  copyToClipBoard(): void {
-    navigator.clipboard.writeText(this.data.url).then(
+  copyToShare() {
+    let data = `${this.data.url}\n${this.data.content}`;
+    navigator.clipboard.writeText(data).then(
+      () => {
+        this.snackBarService.openSnackBar(
+          'Copied to clipboard.',
+          'start',
+          'bottom',
+          1
+        );
+      },
+      (err) => {
+        this.snackBarService.openSnackBar(
+          'Failed to Copy.',
+          'start',
+          'bottom',
+          3
+        );
+      }
+    );
+  }
+
+  copyToClipBoard(data: string): void {
+    navigator.clipboard.writeText(data).then(
       () => {
         this.snackBarService.openSnackBar(
           'Copied to clipboard.',

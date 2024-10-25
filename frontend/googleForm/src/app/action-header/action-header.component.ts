@@ -37,8 +37,11 @@ export class ActionHeaderComponent implements OnInit {
         this.parentForm.value['formName'] == null ||
         this.parentForm.value['formName'] == undefined
       ) {
-        this.parentForm.controls['formName'].patchValue('Untitle form');
+        this.parentForm.controls['formName'].patchValue('Untitled form');
       }
+      this.parentForm.controls['formName'].patchValue(
+        this.parentForm.value['formName'].trim()
+      );
     }, 1);
   }
 

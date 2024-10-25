@@ -477,6 +477,10 @@ export class CreateFormComponent implements OnInit {
     if (!option.value.label || option.value.label.trim() == '') {
       option.patchValue({ id: option.value.id, label: 'Option' });
     }
+    option.patchValue({
+      id: option.value.id,
+      label: option.value.label.trim(),
+    });
   }
 
   onQuestionBlur(sectionIndex: number, questionIndex: number) {
@@ -491,6 +495,9 @@ export class CreateFormComponent implements OnInit {
           label: 'Untitled Question',
         });
       }
+      question.patchValue({
+        label: question.value.label.trim(),
+      });
     }, 0);
   }
 
@@ -501,13 +508,26 @@ export class CreateFormComponent implements OnInit {
         section.value.name == null ||
         section.value.name == undefined ||
         section.value.name.trim() == ''
-      )
+      ) {
         section.patchValue({
           name:
             sectionIndex == 0
               ? this.parentForm.value.formName
               : 'Untitled section',
         });
+      }
+      section.patchValue({
+        name: section.value.name.trim(),
+      });
+    }, 0);
+  }
+
+  onSectionDescBlur(sectionIndex: number) {
+    setTimeout(() => {
+      let section = this.sections.at(sectionIndex);
+      section.patchValue({
+        description: section.value.description.trim(),
+      });
     }, 0);
   }
 

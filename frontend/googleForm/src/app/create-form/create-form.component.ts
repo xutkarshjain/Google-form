@@ -300,6 +300,7 @@ export class CreateFormComponent implements OnInit {
       audit['createdBy'] = res.id;
       req['audit'] = audit;
 
+      req = this.replaceEmptyStringsWithNull(req);
       this.submit(req)
         .then((res: any) => {
           this.showPreviewURL(res.formId);
@@ -317,6 +318,7 @@ export class CreateFormComponent implements OnInit {
   saveAndOpenPreview() {
     if (!this.isFormValid()) {
       // show validation error
+      this.snackBarService.openSnackBar('Invalid Form', 'center', 'top', 3);
       return;
     }
     this.loader = true;
@@ -327,6 +329,7 @@ export class CreateFormComponent implements OnInit {
       audit['modifiedBy'] = res.id;
       audit['createdBy'] = res.id;
       req['audit'] = audit;
+      req = this.replaceEmptyStringsWithNull(req);
 
       this.submit(req)
         .then((formResponse: SaveFormResponse) => {
@@ -340,6 +343,23 @@ export class CreateFormComponent implements OnInit {
           this.snackBarService.openSnackBar('Save Failed', 'center', 'top', 3);
         }); // .then open preview in new tab
     });
+  }
+
+  replaceEmptyStringsWithNull(obj: any): any {
+    if (Array.isArray(obj)) {
+      return obj.map((item) => this.replaceEmptyStringsWithNull(item));
+    } else if (typeof obj === 'object' && obj !== null) {
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          if (obj[key] === '') {
+            obj[key] = null;
+          } else if (typeof obj[key] === 'object') {
+            obj[key] = this.replaceEmptyStringsWithNull(obj[key]);
+          }
+        }
+      }
+    }
+    return obj;
   }
 
   openPreviewInNewTab(formId: string) {

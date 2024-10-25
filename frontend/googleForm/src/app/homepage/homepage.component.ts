@@ -57,6 +57,7 @@ export class HomepageComponent implements OnInit {
   }
 
   fetchAllForms() {
+    this.loading = true;
     this.formsService
       .getFormsByUserId(this.loggedInUser)
       .subscribe((fomsListResponse: FormDetailResponse) => {
@@ -115,6 +116,7 @@ export class HomepageComponent implements OnInit {
       .deleteFormByFormId(row.formId)
       .subscribe((deleteRes: any) => {
         console.log('deleted');
+        this.fetchAllForms();
       });
   }
 
@@ -126,5 +128,15 @@ export class HomepageComponent implements OnInit {
       baseUrl,
       'Check this out! This detailed Google Forms clone makes creating and customizing forms a breeze. Perfect for your next project!\n\n#GoogleFormsClone #CustomForms'
     );
+  }
+
+  rowAction(e: Event) {
+    e.stopPropagation();
+  }
+
+  openFormInNewTab(form: FormDetails) {
+    const urlTree = this.router.createUrlTree(['/forms/edit', form.formId]);
+    const fullUrl = this.router.serializeUrl(urlTree);
+    window.open(fullUrl, '_blank');
   }
 }

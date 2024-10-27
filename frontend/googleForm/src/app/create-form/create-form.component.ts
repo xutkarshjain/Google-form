@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -75,7 +75,8 @@ export class CreateFormComponent implements OnInit {
     private router: Router,
     private dialogService: DialogService,
     private userService: UserService,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private renderer: Renderer2
   ) {}
 
   get sections(): FormArray {
@@ -147,6 +148,11 @@ export class CreateFormComponent implements OnInit {
 
   addOptionWrapper(sectionIndex: number, questionIndex: number) {
     this.addOption(sectionIndex, questionIndex);
+    let optionIndex = this.getOptions(sectionIndex, questionIndex).length - 1;
+    let inputId = `input_section_${sectionIndex}question_${questionIndex}option_${optionIndex}`;
+    setTimeout(() => {
+      this.focusInput(inputId);
+    }, 0);
     this.parentForm.markAsDirty();
   }
 
@@ -372,7 +378,6 @@ export class CreateFormComponent implements OnInit {
   showPreviewURL(url: string) {
     // show previewURL
     let baseUrl = window.location.origin;
-    console.log('baseUrl', baseUrl);
     const confirmed = this.dialogService.alert(
       `${baseUrl}/forms/${url}/viewform`
     );
@@ -397,19 +402,36 @@ export class CreateFormComponent implements OnInit {
 
   addQuestionWrapper(event: any, data?: object) {
     event.stopPropagation();
-    this.addQuestion(this.selectedItem.sectionIndex, data);
+    let sectionIndex = this.selectedItem.sectionIndex;
+    this.addQuestion(sectionIndex, data);
     this.scrollToElement(
-      this.selectedItem.sectionIndex,
-      this.getQuestions(this.selectedItem.sectionIndex).length - 1
+      sectionIndex,
+      this.getQuestions(sectionIndex).length - 1
     );
     this.parentForm.markAsDirty();
+    let questionIndex = this.getQuestions(sectionIndex).length - 1;
+    let inputId = `input_section_${sectionIndex}question_${questionIndex}`;
+    setTimeout(() => {
+      this.focusInput(inputId);
+      this.updateSelected(sectionIndex, questionIndex, 'question');
+    }, 500);
   }
 
-  addSectionWrapper(event: any, data?: object) {
+  addSectionWrapper(event: any, data?: any) {
+    if (!data) {
+      data = JSON.parse(JSON.stringify(this.defaultData.sections[0]));
+      data.questions = [];
+    }
     event.stopPropagation();
     this.addSection(data);
     this.scrollToElement(this.sections.length - 1);
     this.parentForm.markAsDirty();
+    let sectionIndex = this.sections.length - 1;
+    let inputId = `input_section_${sectionIndex}`;
+    setTimeout(() => {
+      this.focusInput(inputId);
+      this.updateSelected(sectionIndex, -1, 'section');
+    }, 500);
   }
 
   removeSectionWrapper(event: any) {
@@ -447,7 +469,6 @@ export class CreateFormComponent implements OnInit {
   }
 
   tabChange(tab: string) {
-    console.log('tab', tab);
     this.selectedTab = tab;
   }
 
@@ -536,5 +557,18 @@ export class CreateFormComponent implements OnInit {
       return item.value == value;
     });
     return option.viewValue || '';
+  }
+
+  selectText(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.select();
+  }
+
+  focusInput(inputId: string): void {
+    const element = document.getElementById(inputId);
+    if (element) {
+      this.renderer.selectRootElement(element).focus();
+      this.renderer.selectRootElement(element).select();
+    }
   }
 }

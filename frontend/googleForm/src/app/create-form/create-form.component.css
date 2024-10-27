@@ -170,6 +170,10 @@ button.pressed {
   margin-bottom: 15px;
 }
 
+.option-text input {
+  padding-left: 4px;
+}
+
 .selectable.selected .option-row {
   margin-bottom: 0;
   height: 48px;

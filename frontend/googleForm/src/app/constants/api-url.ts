@@ -1,4 +1,6 @@
-const baseUrl = 'http://localhost:8080/';
+import { environment } from 'src/environments/environment';
+
+const baseUrl = environment.baseUrl;
 
 export const API_URLS = {
   FETCH_ALL_FORMS: baseUrl + 'api/v1/forms/user',

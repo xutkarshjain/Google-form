@@ -15,4 +15,4 @@ COPY --from=build /app/dist/google-form /usr/share/nginx/html
 
 EXPOSE 4200
 
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

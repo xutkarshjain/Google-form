@@ -11,8 +11,8 @@ RUN npm run build --prod
 # Stage 2: Serve Angular with Nginx
 FROM nginx:alpine
 
-COPY --from=build /app/dist/googleForm /usr/share/nginx/html
+COPY --from=build /app/dist/google-form /usr/share/nginx/html
 
-EXPOSE 80
+EXPOSE 4200
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]

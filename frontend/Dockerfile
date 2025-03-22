@@ -1,11 +1,13 @@
 FROM node:alpine
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY . /usr/src/app
+COPY ./googleForm /app
 
 RUN npm install -g @angular/cli
 
 RUN npm install
 
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+EXPOSE 4200
+
+CMD ["ng", "serve", "--host", "0.0.0.0"]

@@ -6,7 +6,7 @@ WORKDIR /app
 COPY ./googleForm /app
 
 RUN npm install
-RUN npm run build --prod
+RUN npm run build --configuration=production
 
 # Stage 2: Serve Angular with Nginx
 FROM nginx:alpine

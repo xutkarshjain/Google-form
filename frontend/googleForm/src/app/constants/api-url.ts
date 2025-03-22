@@ -1,6 +1,6 @@
-// import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 
-const baseUrl = 'https://forms-backend-j5ji.onrender.com/';
+const baseUrl = environment.baseUrl;
 
 export const API_URLS = {
   FETCH_ALL_FORMS: baseUrl + 'api/v1/forms/user',

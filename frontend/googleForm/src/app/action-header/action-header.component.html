@@ -18,13 +18,13 @@
       </span>
     </form>
     <mat-icon
-      class="material-icons-outlined disabled"
+      class="material-icons-outlined disabled optional-feature"
       style="color: #5f6368; margin-right: 15px"
       matTooltip="( Future scope )"
       >folder</mat-icon
     >
     <mat-icon
-      class="material-icons-outlined disabled"
+      class="material-icons-outlined disabled optional-feature"
       style="color: #5f6368"
       matTooltip="( Future scope )"
       >star_outline</mat-icon
@@ -32,7 +32,7 @@
     <span class="example-spacer"></span>
     <button
       mat-icon-button
-      class="example-icon favorite-icon gray-text disabled"
+      class="example-icon favorite-icon gray-text disabled optional-feature"
       aria-label="Example icon-button with heart icon"
       matTooltip="( Future scope )"
     >
@@ -55,7 +55,7 @@
     </button>
     <button
       mat-icon-button
-      class="example-icon favorite-icon gray-text disabled"
+      class="example-icon favorite-icon gray-text disabled optional-feature"
       aria-label="Example icon-button with heart icon"
       matTooltip="( Future scope )"
     >
@@ -65,7 +65,7 @@
     </button>
     <button
       mat-icon-button
-      class="example-icon favorite-icon gray-text disabled"
+      class="example-icon favorite-icon gray-text disabled optional-feature"
       aria-label="Example icon-button with heart icon"
       matTooltip="( Future scope )"
     >
@@ -73,13 +73,30 @@
         >redo</mat-icon
       >
     </button>
-    <button mat-raised-button color="primary" (click)="submitFormAndShowUrl()">
+    <button
+      mat-raised-button
+      color="primary"
+      class="optional-feature"
+      (click)="submitFormAndShowUrl()"
+    >
       Save
     </button>
 
     <button
       mat-icon-button
-      class="example-icon favorite-icon gray-text disabled"
+      class="example-icon favorite-icon gray-text small-screen-icon"
+      aria-label=""
+      (click)="submitFormAndShowUrl()"
+      matTooltip="Save"
+    >
+      <mat-icon class="material-icons-outlined" style="color: #7248b9"
+        >send</mat-icon
+      >
+    </button>
+
+    <button
+      mat-icon-button
+      class="example-icon favorite-icon gray-text disabled optional-feature"
       aria-label="Example icon-button with heart icon"
       matTooltip="( Future scope )"
     >

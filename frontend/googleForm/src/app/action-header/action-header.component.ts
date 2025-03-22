@@ -21,7 +21,6 @@ export class ActionHeaderComponent implements OnInit {
   constructor(private router: Router, private dialogService: DialogService) {}
 
   tabChange(event: any) {
-    console.log('event', event);
     this.selectedTab = this.tabList[event.index || 0];
     this.tabChangeEvent.emit(this.selectedTab);
   }

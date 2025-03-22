@@ -502,7 +502,7 @@
 </ng-template>
 
 <ng-template #footerMenu>
-  <div class="footer">
+  <div class="footer" *ngIf="selectedTab == 'Questions' && !loader">
     <div class="footer-menu-container">
       <button
         mat-icon-button

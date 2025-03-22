@@ -230,3 +230,7 @@ div {
 .response-analysis .tab-container .mat-mdc-tab-labels {
   justify-content: space-around;
 }
+
+mat-tab-group .mdc-tab {
+  min-width: 60px;
+}

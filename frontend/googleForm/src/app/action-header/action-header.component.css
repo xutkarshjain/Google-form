@@ -22,6 +22,23 @@ mat-toolbar > * {
   margin-right: 5px;
 }
 
+.optional-feature {
+  display: block;
+}
+
+.small-screen-icon {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .optional-feature {
+    display: none;
+  }
+  .small-screen-icon {
+    display: block;
+  }
+}
+
 .tabs-group {
   display: flex;
   justify-items: center;

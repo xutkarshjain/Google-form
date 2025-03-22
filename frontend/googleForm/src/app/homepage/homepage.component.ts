@@ -47,7 +47,6 @@ export class HomepageComponent implements OnInit {
       .getAllTemplateSummaries()
       .subscribe((tempResponse: Template[]) => {
         this.templates = tempResponse;
-        console.log('this.templates', this.templates);
       });
     this.updateBreakPoint();
     this.userService.getLoggedInUser().subscribe((userResponse: User) => {
@@ -79,12 +78,10 @@ export class HomepageComponent implements OnInit {
   }
 
   openRow(form: formDetails) {
-    console.log('click', form);
     this.router.navigate(['/forms/edit', form.formId]);
   }
 
   createFormUsingTemplate(templateId: string) {
-    console.log('templateId', templateId);
     if (templateId && templateId != '0') {
       this.router.navigate(['/forms/create'], {
         queryParams: { templateId: templateId },
@@ -115,7 +112,6 @@ export class HomepageComponent implements OnInit {
     this.formsService
       .deleteFormByFormId(row.formId)
       .subscribe((deleteRes: any) => {
-        console.log('deleted');
         this.fetchAllForms();
       });
   }
@@ -123,7 +119,6 @@ export class HomepageComponent implements OnInit {
   shareForm() {
     // show previewURL
     let baseUrl = window.location.origin;
-    console.log('baseUrl', baseUrl);
     const confirmed = this.dialogService.shareProject(
       baseUrl,
       'Check this out! This detailed Google Forms clone makes creating and customizing forms a breeze. Perfect for your next project!\n\n#GoogleFormsClone #CustomForms'
